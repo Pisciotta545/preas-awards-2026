@@ -3,1290 +3,1125 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>PREAS AWARDS 2026 — Invitación Exclusiva</title>
+    <title>PREAS AWARDS 2026 — Invitación de Gala</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --black: #0a0a0a;
-            --black-light: #1a1a1a;
+            --paper-bg: #ece8e1;
+            --mat-white: #fcfbfa;
+            --envelope-burgundy: #7a1827;
+            --envelope-burgundy-light: #8e2032;
+            --envelope-burgundy-dark: #63121e;
+            --envelope-burgundy-shadow: #480b14;
             --gold: #c9a84c;
-            --gold-light: #e0c872;
-            --gold-dark: #a8893a;
-            --gold-shine: #f5e6a3;
-            --red: #8b1a1a;
-            --red-light: #a52222;
-            --red-accent: #c0392b;
-            --cream: #faf5e8;
-            --text-light: #f0ece0;
+            --gold-light: #ecd68b;
+            --gold-dark: #9e7e2e;
+            --gold-shine: #fff2c4;
+            --card-black: #0c0c0e;
+            --card-black-2: #141418;
+            --card-red: #881622;
+            --card-red-accent: #b31e2f;
+            --text-gold: #dfc16e;
+            --text-light: #f5f2eb;
+            --text-muted: #c8c2b5;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
         html, body {
-            scroll-behavior: smooth;
-            overflow-x: hidden;
+            width: 100%;
             height: 100%;
-        }
-
-        body {
+            overflow-x: hidden;
             font-family: 'Cormorant Garamond', serif;
-            background: #000;
-            min-height: 100vh;
-            min-height: 100dvh;
-            overflow-y: hidden;
-            position: relative;
             -webkit-tap-highlight-color: transparent;
         }
 
-        body.scrollable {
+        body {
+            background-color: var(--paper-bg);
+            /* Realistic fine paper texture */
+            background-image: 
+                radial-gradient(ellipse at 50% 30%, rgba(255,255,255,0.7) 0%, rgba(230,224,215,0.8) 70%, rgba(210,203,192,0.9) 100%),
+                repeating-linear-gradient(45deg, rgba(0,0,0,0.012) 0px, rgba(0,0,0,0.012) 1px, transparent 1px, transparent 4px),
+                repeating-linear-gradient(-45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 4px);
+            min-height: 100vh;
+            min-height: 100dvh;
+            position: relative;
+        }
+
+        body.scroll-unlocked {
             overflow-y: auto;
         }
 
-        /* =========================================
-           SCENE 1: INTRO / ENVELOPE SCREEN
-           ========================================= */
+        /* Subtle ambient vignette */
+        .ambient-vignette {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background: radial-gradient(circle at 50% 50%, transparent 60%, rgba(40,30,25,0.08) 100%);
+            z-index: 1;
+        }
+
+        /* ========================================================
+           SCENE 1: ENVELOPE SHOWCASE (EXACT REPLICA OF THE IMAGE)
+           ======================================================== */
         .scene-envelope {
             position: fixed;
-            top: 0; left: 0;
-            width: 100%;
-            height: 100vh;
-            height: 100dvh;
+            inset: 0;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            background: radial-gradient(ellipse at 50% 40%, #1a1a1a 0%, #050505 70%, #000 100%);
-            overflow: hidden;
-            z-index: 100;
-            transition: transform 1.2s cubic-bezier(0.76, 0, 0.24, 1), opacity 0.8s ease;
+            z-index: 20;
+            padding: 20px;
+            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .scene-envelope.dismissed {
-            transform: scale(0.85) translateY(-30px);
             opacity: 0;
-            pointer-events: none;
-            display: none;
-        }
-
-        /* Ambient light behind envelope */
-        .ambient-light {
-            position: absolute;
-            width: 350px;
-            height: 350px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%);
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -55%);
-            animation: ambient-pulse 4s ease-in-out infinite;
+            transform: scale(0.92) translateY(-20px);
             pointer-events: none;
         }
 
-        @keyframes ambient-pulse {
-            0%, 100% { transform: translate(-50%, -55%) scale(1); opacity: 0.6; }
-            50% { transform: translate(-50%, -55%) scale(1.15); opacity: 1; }
-        }
-
-        /* ===== PARTICLES ===== */
-        .particles {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .particle {
-            position: absolute;
-            border-radius: 50%;
-            background: var(--gold);
-            opacity: 0;
-            animation: float-up linear infinite;
-        }
-
-        @keyframes float-up {
-            0% { opacity: 0; transform: translateY(0) scale(0); }
-            15% { opacity: 0.7; transform: scale(1); }
-            85% { opacity: 0.2; }
-            100% { opacity: 0; transform: translateY(-100vh) scale(0.5); }
-        }
-
-        /* ===== INTRO TITLE (fades out) ===== */
-        .intro-title {
-            position: absolute;
-            top: 12%;
-            text-align: center;
-            opacity: 0;
-            animation: intro-fade-in 1.5s ease 0.5s forwards;
-            z-index: 2;
-        }
-
-        .intro-title span {
-            display: block;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 10px;
-            font-weight: 400;
-            letter-spacing: 6px;
-            text-transform: uppercase;
-            color: var(--gold);
-            opacity: 0.5;
-        }
-
-        .intro-title h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(28px, 8vw, 42px);
-            font-weight: 700;
-            color: var(--gold);
-            letter-spacing: 6px;
-            margin-top: 6px;
-            text-shadow: 0 0 30px rgba(201,168,76,0.3);
-        }
-
-        @keyframes intro-fade-in {
-            0% { opacity: 0; transform: translateY(20px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-
-        /* ===== ENVELOPE ===== */
-        .envelope-wrapper {
+        /* Outer white card / passpartout matting */
+        .mat-card-container {
             position: relative;
-            width: clamp(280px, 80vw, 360px);
-            height: clamp(190px, 54vw, 245px);
-            cursor: pointer;
-            z-index: 5;
-            opacity: 0;
-            animation: envelope-appear 1s cubic-bezier(0.4, 0, 0.2, 1) 1s forwards;
-            transition: transform 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+            width: clamp(320px, 92vw, 470px);
+            aspect-ratio: 1.45 / 1;
+            background-color: var(--mat-white);
+            border-radius: 2px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 
+                0 18px 45px rgba(60, 45, 40, 0.16),
+                0 4px 14px rgba(60, 45, 40, 0.08),
+                0 0 1px rgba(0, 0, 0, 0.15);
+            /* Subtle fine paper texture on mat */
+            background-image: 
+                linear-gradient(to bottom, rgba(255,255,255,0.8), rgba(250,248,245,0.9)),
+                repeating-linear-gradient(0deg, rgba(0,0,0,0.008) 0px, rgba(0,0,0,0.008) 1px, transparent 1px, transparent 3px);
+            animation: mat-appear 1s cubic-bezier(0.2, 0.8, 0.3, 1) forwards;
+            perspective: 1000px;
         }
 
-        @keyframes envelope-appear {
-            0% { opacity: 0; transform: scale(0.8) translateY(30px); }
+        @keyframes mat-appear {
+            0% { opacity: 0; transform: scale(0.94) translateY(20px); }
             100% { opacity: 1; transform: scale(1) translateY(0); }
         }
 
-        /* Hover effect – only on desktop */
+        /* ===== THE BURGUNDY ENVELOPE ===== */
+        .envelope-root {
+            position: relative;
+            width: 82%;
+            height: 70%;
+            cursor: pointer;
+            perspective: 1200px;
+            transform-style: preserve-3d;
+            transition: transform 0.4s ease;
+        }
+
         @media (hover: hover) {
-            .envelope-wrapper:not(.opened):hover {
-                transform: scale(1.03) translateY(-4px);
+            .envelope-root:hover {
+                transform: scale(1.015);
             }
-            .envelope-wrapper:not(.opened):hover .seal-outer {
-                transform: scale(1.08);
-                box-shadow: 0 4px 12px rgba(0,0,0,0.5), 0 0 35px rgba(201,168,76,0.45);
+            .envelope-root:hover .seal-wrapper {
+                filter: drop-shadow(0 8px 18px rgba(100,20,30,0.45));
             }
         }
 
-        .envelope-wrapper.opened {
-            transform: translateY(50vh) scale(0.5);
-            opacity: 0;
-            pointer-events: none;
-            transition: transform 1.2s cubic-bezier(0.76, 0, 0.24, 1), opacity 0.6s ease 0.6s;
-        }
-
-        /* Envelope Body */
-        .envelope-body {
+        /* Envelope main body plate */
+        .env-backplate {
             position: absolute;
-            bottom: 0;
-            width: 100%;
-            height: 76%;
-            background: linear-gradient(160deg, #1c1c1c 0%, #0d0d0d 50%, #131313 100%);
-            border-radius: 0 0 6px 6px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.04);
-            z-index: 3;
+            inset: 0;
+            background: linear-gradient(145deg, var(--envelope-burgundy-light) 0%, var(--envelope-burgundy) 55%, var(--envelope-burgundy-dark) 100%);
+            border-radius: 2px;
+            box-shadow: 
+                0 12px 28px rgba(70, 10, 20, 0.35),
+                0 3px 8px rgba(70, 10, 20, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.12),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.25);
             overflow: hidden;
         }
 
-        .envelope-body::before {
+        /* Paper grain on envelope */
+        .env-backplate::before,
+        .env-flaps-svg::before {
             content: '';
             position: absolute;
             inset: 0;
-            background: repeating-linear-gradient(
-                55deg, transparent, transparent 3px,
-                rgba(255,255,255,0.006) 3px, rgba(255,255,255,0.006) 6px
-            );
+            background-image: repeating-linear-gradient(45deg, rgba(0,0,0,0.015) 0, rgba(0,0,0,0.015) 2px, transparent 2px, transparent 4px);
+            pointer-events: none;
         }
 
-        .envelope-lining {
+        /* Inner lining visible when open */
+        .env-inner-lining {
+            position: absolute;
+            inset: 2px;
+            background: linear-gradient(180deg, #18181c 0%, #111114 100%);
+            border-radius: 1px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .env-inner-lining::after {
+            content: '';
+            position: absolute;
+            top: 15px;
+            width: 70%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(201,168,76,0.3), transparent);
+        }
+
+        /* The emerging card preview inside envelope */
+        .env-card-peek {
+            position: absolute;
+            width: 90%;
+            height: 85%;
+            top: 8%;
+            left: 5%;
+            background: linear-gradient(145deg, #16161a 0%, #0c0c0e 100%);
+            border: 1px solid rgba(201,168,76,0.25);
+            border-radius: 2px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+            transition: transform 0.9s cubic-bezier(0.3, 1, 0.4, 1);
+            transform: translateY(0);
+        }
+
+        .env-card-peek .peek-text {
+            font-family: 'Cinzel', serif;
+            font-size: 11px;
+            letter-spacing: 4px;
+            color: var(--gold);
+            opacity: 0.8;
+        }
+
+        /* The lower & side folds (pocket) */
+        .env-pocket-svg {
             position: absolute;
             inset: 0;
-            background: linear-gradient(180deg, rgba(201,168,76,0.12) 0%, transparent 40%);
-        }
-
-        /* Front pocket */
-        .envelope-pocket {
-            position: absolute;
-            bottom: 0; left: 0;
-            width: 0; height: 0;
-            border-left: calc(clamp(280px, 80vw, 360px) / 2) solid transparent;
-            border-right: calc(clamp(280px, 80vw, 360px) / 2) solid transparent;
-            border-bottom: calc(clamp(190px, 54vw, 245px) * 0.47) solid #151515;
+            width: 100%;
+            height: 100%;
             z-index: 4;
+            pointer-events: none;
+            filter: drop-shadow(0 -2px 3px rgba(50, 5, 12, 0.25));
         }
 
-        /* Top flap */
-        .envelope-flap {
+        /* The TOP FLAP */
+        .env-flap-container {
             position: absolute;
-            top: 0; left: 0;
-            width: 0; height: 0;
-            border-left: calc(clamp(280px, 80vw, 360px) / 2) solid transparent;
-            border-right: calc(clamp(280px, 80vw, 360px) / 2) solid transparent;
-            border-top: calc(clamp(190px, 54vw, 245px) * 0.6) solid #181818;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 60%;
             transform-origin: top center;
+            transform-style: preserve-3d;
             transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 5;
-            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5));
+            z-index: 6;
+            filter: drop-shadow(0 4px 6px rgba(45, 5, 10, 0.35));
         }
 
-        .envelope-wrapper.opened .envelope-flap {
+        .envelope-root.open .env-flap-container {
             transform: rotateX(180deg);
             z-index: 1;
         }
 
-        /* Side triangles */
-        .env-side-l, .env-side-r {
-            position: absolute;
-            bottom: 0;
-            width: 0; height: 0;
-            z-index: 2;
-        }
-        .env-side-l {
-            left: 0;
-            border-bottom: calc(clamp(190px, 54vw, 245px) * 0.76) solid transparent;
-            border-left: calc(clamp(280px, 80vw, 360px) / 2) solid #101010;
-        }
-        .env-side-r {
-            right: 0;
-            border-bottom: calc(clamp(190px, 54vw, 245px) * 0.76) solid transparent;
-            border-right: calc(clamp(280px, 80vw, 360px) / 2) solid #131313;
+        .envelope-root.open .env-card-peek {
+            transform: translateY(-55%);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
         }
 
-        /* ===== WAX SEAL ===== */
-        .wax-seal {
+        /* SVG flap */
+        .env-topflap-svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        /* ========================================================
+           WAX SEAL — EXACT REPLICA OF THE IMAGE
+           ======================================================== */
+        .seal-wrapper {
             position: absolute;
-            top: 46%;
+            top: 55%;
             left: 50%;
             transform: translate(-50%, -50%);
+            width: clamp(66px, 19vw, 84px);
+            height: clamp(66px, 19vw, 84px);
             z-index: 10;
-            transition: opacity 0.4s ease, transform 0.4s ease;
+            cursor: pointer;
+            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.5s ease;
+            filter: drop-shadow(0 6px 14px rgba(70, 10, 18, 0.4));
         }
 
-        .envelope-wrapper.opened .wax-seal {
+        .envelope-root.open .seal-wrapper {
             opacity: 0;
-            transform: translate(-50%, -50%) scale(0.3) rotate(30deg);
+            transform: translate(-50%, -50%) scale(0.4) rotate(25deg);
+            pointer-events: none;
         }
 
-        .seal-outer {
-            width: clamp(60px, 17vw, 78px);
-            height: clamp(60px, 17vw, 78px);
-            border-radius: 50%;
-            background: radial-gradient(ellipse at 35% 28%,
-                var(--gold-shine) 0%, var(--gold-light) 18%,
-                var(--gold) 38%, var(--gold-dark) 62%,
-                #8a7030 85%, #6a5420 100%
-            );
-            box-shadow:
-                0 5px 15px rgba(0,0,0,0.6),
-                inset 0 2px 5px rgba(255,255,255,0.3),
-                inset 0 -3px 6px rgba(0,0,0,0.25);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            animation: seal-glow 3s ease-in-out infinite;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        @keyframes seal-glow {
-            0%, 100% { box-shadow: 0 5px 15px rgba(0,0,0,0.6), 0 0 15px rgba(201,168,76,0.0), inset 0 2px 5px rgba(255,255,255,0.3), inset 0 -3px 6px rgba(0,0,0,0.25); }
-            50% { box-shadow: 0 5px 15px rgba(0,0,0,0.6), 0 0 30px rgba(201,168,76,0.35), inset 0 2px 5px rgba(255,255,255,0.3), inset 0 -3px 6px rgba(0,0,0,0.25); }
-        }
-
-        /* Wavy bumps around seal */
-        .seal-bumps {
-            position: absolute;
-            inset: -6px;
-            border-radius: 50%;
-            z-index: -1;
-        }
-        .seal-bumps::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: 50%;
-            background:
-                radial-gradient(circle at 50% 0%, var(--gold-dark) 4px, transparent 5px),
-                radial-gradient(circle at 85% 15%, var(--gold-dark) 4px, transparent 5px),
-                radial-gradient(circle at 100% 50%, var(--gold-dark) 4px, transparent 5px),
-                radial-gradient(circle at 85% 85%, var(--gold-dark) 4px, transparent 5px),
-                radial-gradient(circle at 50% 100%, var(--gold-dark) 4px, transparent 5px),
-                radial-gradient(circle at 15% 85%, var(--gold-dark) 4px, transparent 5px),
-                radial-gradient(circle at 0% 50%, var(--gold-dark) 4px, transparent 5px),
-                radial-gradient(circle at 15% 15%, var(--gold-dark) 4px, transparent 5px);
-        }
-
-        .seal-inner {
-            width: 62%;
-            height: 62%;
-            border-radius: 50%;
-            border: 1.5px solid rgba(255,255,255,0.22);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .seal-text {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-            font-size: clamp(6.5px, 1.8vw, 8px);
-            letter-spacing: 1.5px;
-            color: #3d2e10;
-            text-align: center;
-            line-height: 1.35;
-            text-shadow: 0 1px 1px rgba(255,255,255,0.12);
-        }
-
-        /* Instruction */
-        .open-hint {
-            position: absolute;
-            bottom: calc(-18% - 30px);
+        .seal-svg {
             width: 100%;
-            text-align: center;
-            font-family: 'Montserrat', sans-serif;
-            font-size: clamp(9px, 2.5vw, 11px);
-            font-weight: 400;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            color: var(--gold);
-            opacity: 0;
-            animation: hint-appear 1s ease 2s forwards;
-        }
-
-        .open-hint .arrow {
+            height: 100%;
             display: block;
-            margin-top: 8px;
-            font-size: 18px;
-            animation: bounce-arrow 1.5s ease-in-out infinite;
+            overflow: visible;
         }
 
-        @keyframes hint-appear {
-            to { opacity: 0.6; }
+        /* Instruction badge under envelope */
+        .tap-prompt {
+            position: absolute;
+            bottom: -50px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 10.5px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #6a584a;
+            opacity: 0.85;
+            animation: pulse-prompt 2.2s infinite ease-in-out;
+            pointer-events: none;
         }
 
-        @keyframes bounce-arrow {
-            0%, 100% { transform: translateY(0); opacity: 0.6; }
-            50% { transform: translateY(6px); opacity: 1; }
+        .tap-prompt svg {
+            width: 13px;
+            height: 13px;
+            fill: currentColor;
         }
 
-        .envelope-wrapper.opened ~ .open-hint,
-        .envelope-wrapper.opened .open-hint {
-            opacity: 0 !important;
-            transition: opacity 0.3s ease;
+        @keyframes pulse-prompt {
+            0%, 100% { opacity: 0.6; transform: translateY(0); }
+            50% { opacity: 1; transform: translateY(3px); }
         }
 
-        /* =========================================
-           SCENE 2: CARD VIEW
-           ========================================= */
-        .scene-card {
+        /* ========================================================
+           SCENE 2: CEREMONY INVITATION CARD (FULL PRESENTATION)
+           ======================================================== */
+        .scene-card-view {
             display: none;
             width: 100%;
             min-height: 100vh;
             min-height: 100dvh;
-            justify-content: center;
-            align-items: flex-start;
-            padding: 0;
-            z-index: 50;
+            background: radial-gradient(ellipse at 50% 15%, #18181c 0%, #0d0d10 65%, #050507 100%);
+            position: relative;
+            z-index: 30;
+            padding: 40px 16px 60px;
             opacity: 0;
-            background: radial-gradient(ellipse at 50% 20%, #151515 0%, #050505 60%, #000 100%);
             transition: opacity 0.8s ease;
         }
 
-        .scene-card.active {
-            display: flex;
-            opacity: 1;
-        }
-
-        /* Scrollable card container */
-        .card-scroll-area {
-            width: 100%;
+        .scene-card-view.active {
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 30px 15px 50px;
-            min-height: 100vh;
-            min-height: 100dvh;
-        }
-
-        /* ===== THE CARD ===== */
-        .card {
-            width: 100%;
-            max-width: 420px;
-            border-radius: 6px;
-            overflow: hidden;
-            box-shadow:
-                0 30px 80px rgba(0,0,0,0.7),
-                0 0 2px rgba(201,168,76,0.25);
-            position: relative;
-            opacity: 0;
-            transform: translateY(60px) scale(0.92);
-            transition: transform 1s cubic-bezier(0.22, 1, 0.36, 1) 0.3s,
-                        opacity 0.8s ease 0.3s;
-        }
-
-        .card.visible {
             opacity: 1;
-            transform: translateY(0) scale(1);
         }
 
-        .card-inner {
-            background: linear-gradient(175deg, #111 0%, #0c0c0c 50%, #090909 100%);
-            padding: 0;
+        /* Floating gold specks on card view */
+        .gold-particles-canvas {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* The Card Container */
+        .invitation-card {
             position: relative;
+            width: 100%;
+            max-width: 440px;
+            background: linear-gradient(165deg, var(--card-black-2) 0%, var(--card-black) 50%, #070709 100%);
+            border-radius: 4px;
+            box-shadow: 
+                0 30px 70px rgba(0,0,0,0.8),
+                0 0 0 1px rgba(201,168,76,0.2),
+                0 0 30px rgba(184,26,42,0.15);
+            overflow: hidden;
+            z-index: 10;
+            animation: card-enter 0.9s cubic-bezier(0.2, 0.9, 0.3, 1) forwards;
         }
 
-        /* Gold inner border */
-        .card-border-frame {
+        @keyframes card-enter {
+            0% { opacity: 0; transform: translateY(50px) scale(0.95); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* Luxury Gold Framing Lines */
+        .card-frame {
             position: absolute;
-            top: 10px; left: 10px; right: 10px; bottom: 10px;
-            border: 1px solid rgba(201,168,76,0.2);
+            inset: 12px;
+            border: 1px solid rgba(201,168,76,0.28);
             pointer-events: none;
             z-index: 2;
         }
 
-        /* Animated corner ornaments */
-        .corner {
+        .card-frame-inner {
             position: absolute;
-            width: 24px;
-            height: 24px;
-            z-index: 3;
-            opacity: 0;
+            inset: 16px;
+            border: 0.5px solid rgba(201,168,76,0.14);
+            pointer-events: none;
+            z-index: 2;
         }
-        .corner::before, .corner::after {
+
+        /* Corner accents */
+        .corner-notch {
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            z-index: 3;
+        }
+        .corner-notch::before, .corner-notch::after {
             content: '';
             position: absolute;
             background: var(--gold);
-            transition: width 0.6s ease, height 0.6s ease;
         }
-        .card.visible .corner { opacity: 1; transition: opacity 0.5s ease 1s; }
+        .cn-tl { top: 12px; left: 12px; }
+        .cn-tl::before { top: 0; left: 0; width: 14px; height: 1.5px; }
+        .cn-tl::after  { top: 0; left: 0; width: 1.5px; height: 14px; }
 
-        .c-tl { top: 16px; left: 16px; }
-        .c-tl::before { top: 0; left: 0; width: 24px; height: 1.5px; }
-        .c-tl::after  { top: 0; left: 0; width: 1.5px; height: 24px; }
+        .cn-tr { top: 12px; right: 12px; }
+        .cn-tr::before { top: 0; right: 0; width: 14px; height: 1.5px; }
+        .cn-tr::after  { top: 0; right: 0; width: 1.5px; height: 14px; }
 
-        .c-tr { top: 16px; right: 16px; }
-        .c-tr::before { top: 0; right: 0; width: 24px; height: 1.5px; }
-        .c-tr::after  { top: 0; right: 0; width: 1.5px; height: 24px; }
+        .cn-bl { bottom: 12px; left: 12px; }
+        .cn-bl::before { bottom: 0; left: 0; width: 14px; height: 1.5px; }
+        .cn-bl::after  { bottom: 0; left: 0; width: 1.5px; height: 14px; }
 
-        .c-bl { bottom: 16px; left: 16px; }
-        .c-bl::before { bottom: 0; left: 0; width: 24px; height: 1.5px; }
-        .c-bl::after  { bottom: 0; left: 0; width: 1.5px; height: 24px; }
+        .cn-br { bottom: 12px; right: 12px; }
+        .cn-br::before { bottom: 0; right: 0; width: 14px; height: 1.5px; }
+        .cn-br::after  { bottom: 0; right: 0; width: 1.5px; height: 14px; }
 
-        .c-br { bottom: 16px; right: 16px; }
-        .c-br::before { bottom: 0; right: 0; width: 24px; height: 1.5px; }
-        .c-br::after  { bottom: 0; right: 0; width: 1.5px; height: 24px; }
-
-        /* Red accent line top/bottom */
-        .accent-bar {
+        /* Top red accent bar */
+        .card-top-bar {
+            height: 5px;
             width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, transparent 5%, var(--red) 30%, var(--red-light) 50%, var(--red) 70%, transparent 95%);
+            background: linear-gradient(90deg, transparent, var(--card-red), var(--card-red-accent), var(--gold), var(--card-red-accent), var(--card-red), transparent);
         }
 
-        /* Trophy / Emblem Animation */
-        .emblem-area {
-            padding: 35px 20px 10px;
+        /* Header block */
+        .card-hero {
+            padding: 38px 25px 15px;
             text-align: center;
-            position: relative;
         }
 
-        .trophy-icon {
-            font-size: clamp(44px, 12vw, 56px);
+        .seal-mini-badge {
             display: inline-block;
-            filter: drop-shadow(0 0 15px rgba(201,168,76,0.3));
-            opacity: 0;
-            transform: scale(0.4) rotate(-15deg);
-            transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.7s;
-        }
-        .card.visible .trophy-icon {
-            opacity: 1;
-            transform: scale(1) rotate(0deg);
+            width: 44px;
+            height: 44px;
+            margin-bottom: 12px;
+            filter: drop-shadow(0 4px 10px rgba(0,0,0,0.5));
         }
 
-        /* Rotating ring behind trophy */
-        .ring-spin {
-            position: absolute;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: clamp(80px, 22vw, 100px);
-            height: clamp(80px, 22vw, 100px);
-            border: 1px solid rgba(201,168,76,0.12);
-            border-top-color: rgba(201,168,76,0.4);
-            border-radius: 50%;
-            animation: ring-rotate 8s linear infinite;
-            pointer-events: none;
-        }
-
-        .ring-spin-2 {
-            position: absolute;
-            top: 25px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: clamp(70px, 19vw, 90px);
-            height: clamp(70px, 19vw, 90px);
-            border: 1px dashed rgba(201,168,76,0.08);
-            border-radius: 50%;
-            animation: ring-rotate 12s linear infinite reverse;
-            pointer-events: none;
-        }
-
-        @keyframes ring-rotate {
-            to { transform: translateX(-50%) rotate(360deg); }
-        }
-
-        /* ===== HEADER ===== */
-        .card-header {
-            padding: 10px 25px 18px;
-            text-align: center;
-        }
-
-        .card-header .tag {
+        .hero-kicker {
             font-family: 'Montserrat', sans-serif;
-            font-size: clamp(7px, 2vw, 9px);
-            font-weight: 500;
+            font-size: 8.5px;
+            font-weight: 600;
             letter-spacing: 5px;
             text-transform: uppercase;
             color: var(--gold);
-            opacity: 0;
-            transform: translateY(15px);
-            transition: all 0.6s ease 0.9s;
+            opacity: 0.75;
+            margin-bottom: 6px;
         }
-        .card.visible .card-header .tag { opacity: 0.6; transform: translateY(0); }
 
-        .card-header .title {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(34px, 10vw, 48px);
+        .hero-title-main {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(32px, 8.5vw, 44px);
             font-weight: 800;
-            color: var(--gold);
+            color: var(--gold-shine);
             letter-spacing: 5px;
             line-height: 1.1;
-            margin-top: 10px;
-            text-shadow: 0 2px 20px rgba(201,168,76,0.25);
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.7s ease 1s;
+            text-shadow: 
+                0 0 25px rgba(201,168,76,0.35),
+                0 2px 4px rgba(0,0,0,0.8);
         }
-        .card.visible .card-header .title { opacity: 1; transform: translateY(0); }
 
-        .card-header .subtitle {
+        .hero-title-sub {
             font-family: 'Playfair Display', serif;
-            font-size: clamp(18px, 5vw, 24px);
+            font-size: clamp(17px, 4.8vw, 22px);
             font-weight: 400;
             font-style: italic;
-            color: var(--gold-light);
-            letter-spacing: 8px;
-            opacity: 0;
-            transform: translateY(15px);
-            transition: all 0.6s ease 1.1s;
-        }
-        .card.visible .card-header .subtitle { opacity: 0.75; transform: translateY(0); }
-
-        .card-header .year-badge {
-            display: inline-block;
-            margin-top: 12px;
-            padding: 4px 18px;
-            border: 1px solid rgba(201,168,76,0.25);
-            font-family: 'Montserrat', sans-serif;
-            font-size: clamp(10px, 3vw, 13px);
-            font-weight: 300;
-            letter-spacing: 8px;
             color: var(--gold);
-            opacity: 0;
-            transform: scale(0.8);
-            transition: all 0.5s ease 1.25s;
+            letter-spacing: 6px;
+            margin-top: 2px;
+            opacity: 0.9;
         }
-        .card.visible .card-header .year-badge { opacity: 0.5; transform: scale(1); }
+
+        .hero-edition {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 14px;
+            padding: 4px 18px;
+            background: rgba(136, 22, 34, 0.25);
+            border: 1px solid rgba(201,168,76,0.3);
+            border-radius: 20px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 6px;
+            color: var(--gold-light);
+        }
 
         /* Dividers */
-        .div-gold {
-            width: 65%;
+        .gold-line {
+            width: 70%;
             height: 1px;
-            margin: 0 auto;
             background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            margin: 20px auto;
             opacity: 0.35;
         }
 
-        .div-red {
-            width: 40px;
-            height: 2.5px;
-            margin: 0 auto;
-            background: var(--red);
-            border-radius: 2px;
-        }
-
-        /* ===== BODY ===== */
-        .card-body {
-            padding: 22px clamp(22px, 6vw, 35px);
+        /* Card Text Content */
+        .card-body-content {
+            padding: 0 28px 25px;
             text-align: center;
         }
 
-        /* Staggered reveal for paragraphs */
-        .reveal {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-        .reveal.shown {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .card-body .msg {
-            font-size: clamp(14px, 4vw, 16.5px);
-            font-weight: 400;
+        .honor-paragraph {
+            font-size: clamp(15.5px, 4.2vw, 17.5px);
             line-height: 1.7;
             color: var(--text-light);
-            opacity: 0.85;
             margin-bottom: 14px;
+            font-weight: 400;
         }
 
-        .card-body .msg em {
-            color: var(--gold-light);
+        .honor-paragraph em {
             font-style: italic;
+            color: var(--gold-light);
+            font-weight: 600;
         }
 
-        /* ===== INFO BOX ===== */
-        .info-box {
-            margin: 8px 0 16px;
-            padding: clamp(14px, 4vw, 20px);
-            background: rgba(139,26,26,0.08);
-            border-left: 2.5px solid var(--red);
-            border-right: 2.5px solid var(--red);
+        /* Event Details Box (Red + Gold accent) */
+        .event-details-card {
+            margin: 24px 0 18px;
+            padding: 20px 18px;
+            background: linear-gradient(145deg, rgba(136, 22, 34, 0.16) 0%, rgba(30, 10, 15, 0.25) 100%);
+            border: 1px solid rgba(201,168,76,0.22);
+            border-left: 3px solid var(--card-red-accent);
+            border-right: 3px solid var(--card-red-accent);
             border-radius: 3px;
-            position: relative;
-            overflow: hidden;
         }
 
-        /* Subtle shimmer on info box */
-        .info-box::after {
-            content: '';
-            position: absolute;
-            top: 0; left: -100%;
-            width: 50%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(201,168,76,0.04), transparent);
-            animation: shimmer 4s ease-in-out infinite 2s;
-        }
-
-        @keyframes shimmer {
-            0% { left: -100%; }
-            100% { left: 200%; }
-        }
-
-        .info-row {
+        .detail-item {
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
             margin: 8px 0;
-        }
-
-        .info-row .icon {
-            font-size: clamp(14px, 4vw, 17px);
-            width: 24px;
-            text-align: center;
-            flex-shrink: 0;
-        }
-
-        .info-row .text {
             font-family: 'Montserrat', sans-serif;
-            font-size: clamp(10.5px, 3vw, 12.5px);
-            font-weight: 500;
+            font-size: clamp(11.5px, 3.2vw, 13px);
             color: var(--text-light);
-            letter-spacing: 0.5px;
         }
 
-        .info-row .text strong {
-            color: var(--gold-light);
+        .detail-item .d-icon {
+            font-size: 15px;
+            color: var(--gold);
+        }
+
+        .detail-item strong {
+            color: var(--gold-shine);
             font-weight: 600;
         }
 
-        .info-row .text .note {
-            font-size: 0.8em;
+        .detail-item .sub-note {
+            font-size: 10px;
+            color: var(--text-muted);
             font-style: italic;
-            opacity: 0.6;
+            margin-left: 2px;
         }
 
-        /* Dress Code box */
-        .dress-box {
-            margin-top: 16px;
-            padding: 10px 16px;
-            border: 1px solid rgba(201,168,76,0.12);
-            background: rgba(201,168,76,0.03);
-            border-radius: 3px;
+        /* Dress code section */
+        .dress-code-badge {
+            margin-top: 14px;
+            padding: 10px 15px;
+            background: rgba(201,168,76,0.06);
+            border: 1px solid rgba(201,168,76,0.18);
+            border-radius: 2px;
             text-align: center;
         }
 
-        .dress-box .label {
+        .dress-code-badge .dc-title {
             font-family: 'Montserrat', sans-serif;
-            font-size: clamp(8px, 2.2vw, 10px);
+            font-size: 9px;
             font-weight: 700;
-            letter-spacing: 4px;
+            letter-spacing: 3.5px;
             text-transform: uppercase;
             color: var(--gold);
         }
 
-        .dress-box .value {
+        .dress-code-badge .dc-val {
             font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(13px, 3.5vw, 15px);
+            font-size: 15.5px;
             color: var(--text-light);
-            opacity: 0.7;
-            margin-top: 3px;
+            margin-top: 2px;
+            font-style: italic;
         }
 
-        /* ===== CTA SECTION ===== */
-        .cta-area {
-            padding: 15px clamp(20px, 6vw, 35px) 10px;
+        /* RSVP Actions */
+        .rsvp-container {
+            margin-top: 22px;
             text-align: center;
         }
 
-        .cta-area .cta-msg {
-            font-size: clamp(12px, 3.5vw, 14px);
-            color: var(--text-light);
-            opacity: 0.55;
+        .rsvp-request-text {
+            font-size: 14.5px;
+            color: var(--text-muted);
             line-height: 1.5;
             margin-bottom: 16px;
         }
 
-        .rsvp-btn {
-            display: inline-block;
-            padding: clamp(11px, 3vw, 14px) clamp(28px, 8vw, 42px);
+        .rsvp-button-main {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 14px 38px;
+            background: linear-gradient(135deg, #a02030 0%, #70101d 100%);
             border: 1.5px solid var(--gold);
-            background: linear-gradient(135deg, rgba(201,168,76,0.12), rgba(201,168,76,0.03));
-            color: var(--gold);
+            border-radius: 2px;
             font-family: 'Montserrat', sans-serif;
-            font-size: clamp(9px, 2.5vw, 11px);
-            font-weight: 600;
-            letter-spacing: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 3.5px;
             text-transform: uppercase;
+            color: #fff;
             text-decoration: none;
             cursor: pointer;
-            position: relative;
-            overflow: hidden;
+            box-shadow: 
+                0 6px 20px rgba(136, 22, 34, 0.4),
+                0 0 15px rgba(201, 168, 76, 0.25);
             transition: all 0.35s ease;
-            -webkit-tap-highlight-color: transparent;
         }
 
-        .rsvp-btn::before {
-            content: '';
-            position: absolute;
-            top: 0; left: -100%;
-            width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(201,168,76,0.18), transparent);
-            transition: left 0.6s ease;
-        }
-
-        .rsvp-btn:hover, .rsvp-btn:active {
-            background: linear-gradient(135deg, rgba(201,168,76,0.25), rgba(201,168,76,0.08));
-            box-shadow: 0 0 25px rgba(201,168,76,0.2);
+        .rsvp-button-main:hover,
+        .rsvp-button-main:active {
             transform: translateY(-2px);
+            background: linear-gradient(135deg, #b8283a 0%, #851523 100%);
+            box-shadow: 
+                0 10px 28px rgba(136, 22, 34, 0.55),
+                0 0 25px rgba(201, 168, 76, 0.45);
         }
 
-        .rsvp-btn:hover::before {
-            left: 100%;
-        }
-
-        /* Pulse ring animation around button */
-        .btn-wrapper {
-            position: relative;
-            display: inline-block;
-        }
-
-        .btn-wrapper::after {
-            content: '';
-            position: absolute;
-            inset: -6px;
-            border: 1px solid var(--gold);
-            opacity: 0;
-            border-radius: 2px;
-            animation: btn-pulse-ring 2.5s ease-in-out infinite 3s;
-        }
-
-        @keyframes btn-pulse-ring {
-            0% { opacity: 0; transform: scale(1); }
-            50% { opacity: 0.3; transform: scale(1.06); }
-            100% { opacity: 0; transform: scale(1.12); }
-        }
-
-        /* Congrats footer */
-        .card-footer {
-            padding: 10px 20px 25px;
+        /* Congratulations closing footer */
+        .card-close-statement {
+            padding: 16px 20px 30px;
             text-align: center;
         }
 
-        .congrats {
+        .congrats-text {
             font-family: 'Playfair Display', serif;
-            font-size: clamp(15px, 4.5vw, 19px);
+            font-size: clamp(16px, 4.5vw, 20px);
             font-style: italic;
+            color: var(--gold-shine);
+            text-shadow: 0 0 15px rgba(201,168,76,0.3);
+        }
+
+        /* View Envelope Again Button */
+        .replay-envelope-btn {
+            margin-top: 25px;
+            background: transparent;
+            border: 1px solid rgba(201,168,76,0.3);
             color: var(--gold);
-            opacity: 0;
-            transform: translateY(10px);
-            transition: all 0.7s ease;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 9.5px;
+            font-weight: 500;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            padding: 8px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
         }
 
-        .congrats.shown {
-            opacity: 0.8;
-            transform: translateY(0);
+        .replay-envelope-btn:hover {
+            background: rgba(201,168,76,0.1);
+            border-color: var(--gold);
         }
 
-        /* Star decorations */
-        .stars-row {
-            margin: 8px 0;
-            text-align: center;
-            font-size: 10px;
-            letter-spacing: 8px;
-            color: var(--gold);
-            opacity: 0.3;
-        }
-
-        /* ===== SPARKLE BURST ===== */
-        .sparkles-layer {
+        /* ========================================================
+           CONFIRMATION MODAL
+           ======================================================== */
+        .modal-overlay {
             position: fixed;
             inset: 0;
-            pointer-events: none;
-            z-index: 200;
-        }
-
-        .spark {
-            position: absolute;
-            border-radius: 50%;
-            opacity: 0;
-        }
-
-        @keyframes spark-fly {
-            0% { opacity: 1; transform: translate(0,0) scale(1); }
-            100% { opacity: 0; transform: translate(var(--sx), var(--sy)) scale(0); }
-        }
-
-        /* ===== CONFETTI RAIN ===== */
-        .confetti-piece {
-            position: fixed;
-            width: 8px;
-            height: 14px;
-            top: -20px;
-            opacity: 0.9;
-            z-index: 150;
-            pointer-events: none;
-            animation: confetti-fall linear forwards;
-        }
-
-        @keyframes confetti-fall {
-            0% { transform: translateY(0) rotateZ(0deg) rotateX(0deg); opacity: 0.9; }
-            25% { opacity: 1; }
-            100% { transform: translateY(110vh) rotateZ(var(--rz)) rotateX(var(--rx)); opacity: 0; }
-        }
-
-        /* ===== CONFIRM OVERLAY ===== */
-        .overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.9);
+            background: rgba(0,0,0,0.88);
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 500;
+            z-index: 100;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.5s ease;
+            transition: opacity 0.4s ease;
             padding: 20px;
         }
 
-        .overlay.show { opacity: 1; pointer-events: auto; }
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
 
-        .overlay-box {
-            background: linear-gradient(170deg, #131313 0%, #0a0a0a 100%);
-            border: 1px solid var(--gold);
-            padding: clamp(28px, 8vw, 45px);
-            border-radius: 6px;
+        .modal-box {
+            background: linear-gradient(170deg, #18181c 0%, #0d0d10 100%);
+            border: 1.5px solid var(--gold);
+            padding: 35px 25px;
+            border-radius: 4px;
             text-align: center;
             max-width: 360px;
             width: 100%;
-            transform: scale(0.7) translateY(30px);
-            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-            box-shadow: 0 0 60px rgba(201,168,76,0.1);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.8), 0 0 30px rgba(201,168,76,0.2);
+            transform: scale(0.85);
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        .overlay.show .overlay-box {
-            transform: scale(1) translateY(0);
+        .modal-overlay.active .modal-box {
+            transform: scale(1);
         }
 
-        .overlay-box .big-icon {
-            font-size: 50px;
-            display: block;
-            margin-bottom: 12px;
-            animation: trophy-bounce 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s both;
+        .modal-box h3 {
+            font-family: 'Cinzel', serif;
+            color: var(--gold-shine);
+            font-size: 22px;
+            margin: 12px 0 8px;
+            letter-spacing: 2px;
         }
 
-        @keyframes trophy-bounce {
-            0% { transform: scale(0) rotate(-20deg); }
-            100% { transform: scale(1) rotate(0deg); }
-        }
-
-        .overlay-box h2 {
-            font-family: 'Playfair Display', serif;
-            color: var(--gold);
-            font-size: clamp(20px, 5vw, 26px);
-            margin-bottom: 10px;
-        }
-
-        .overlay-box p {
-            font-family: 'Cormorant Garamond', serif;
+        .modal-box p {
             color: var(--text-light);
-            font-size: clamp(14px, 4vw, 17px);
-            opacity: 0.75;
+            font-size: 15px;
             line-height: 1.6;
+            opacity: 0.85;
         }
 
-        .close-btn {
-            margin-top: 22px;
-            padding: 10px 28px;
-            border: 1px solid var(--gold);
+        .modal-close-btn {
+            margin-top: 20px;
+            padding: 9px 26px;
             background: transparent;
+            border: 1px solid var(--gold);
             color: var(--gold);
             font-family: 'Montserrat', sans-serif;
             font-size: 10px;
-            letter-spacing: 3px;
+            letter-spacing: 2.5px;
             text-transform: uppercase;
             cursor: pointer;
             transition: background 0.3s;
         }
 
-        .close-btn:hover, .close-btn:active {
-            background: rgba(201,168,76,0.12);
-        }
-
-        /* ===== LANDSCAPE HELPER ===== */
-        @media (orientation: landscape) and (max-height: 500px) {
-            .scene-envelope {
-                padding: 10px;
-            }
-            .envelope-wrapper {
-                width: 260px;
-                height: 175px;
-            }
-            .envelope-pocket {
-                border-left-width: 130px !important;
-                border-right-width: 130px !important;
-                border-bottom-width: 82px !important;
-            }
-            .envelope-flap {
-                border-left-width: 130px !important;
-                border-right-width: 130px !important;
-                border-top-width: 105px !important;
-            }
-            .env-side-l {
-                border-bottom-width: 133px !important;
-                border-left-width: 130px !important;
-            }
-            .env-side-r {
-                border-bottom-width: 133px !important;
-                border-right-width: 130px !important;
-            }
-            .intro-title { top: 4%; }
-            .intro-title h1 { font-size: 24px; }
-            .card-scroll-area { padding: 15px 10px 30px; }
-        }
-
-        /* Tablets */
-        @media (min-width: 768px) {
-            .card { max-width: 480px; }
-            .card-scroll-area { padding: 50px 20px 60px; }
-        }
-
-        /* Large desktop */
-        @media (min-width: 1200px) {
-            .card { max-width: 500px; }
-            .ambient-light { width: 450px; height: 450px; }
+        .modal-close-btn:hover {
+            background: rgba(201,168,76,0.15);
         }
     </style>
 </head>
 <body>
 
-    <!-- =================== SCENE 1: ENVELOPE =================== -->
+    <div class="ambient-vignette"></div>
+
+    <!-- ========================================================
+         SCENE 1: ENVELOPE SHOWCASE (EXACT REPLICA OF THE IMAGE)
+         ======================================================== -->
     <div class="scene-envelope" id="sceneEnvelope">
-        <div class="ambient-light"></div>
-        <div class="particles" id="particles"></div>
+        
+        <!-- White Passpartout Matting Card -->
+        <div class="mat-card-container">
+            
+            <!-- The Burgundy Envelope -->
+            <div class="envelope-root" id="envelopeRoot" onclick="handleEnvelopeClick()">
+                
+                <!-- Envelope Backplate -->
+                <div class="env-backplate">
+                    <div class="env-inner-lining"></div>
+                </div>
 
-        <div class="intro-title" id="introTitle">
-            <span>Invitación exclusiva</span>
-            <h1>PREAS AWARDS</h1>
+                <!-- Peeking Card inside -->
+                <div class="env-card-peek">
+                    <span class="peek-text">PREAS AWARDS</span>
+                </div>
+
+                <!-- Side & Bottom Folds (Pocket) using SVG for photorealistic seams -->
+                <svg class="env-pocket-svg" viewBox="0 0 320 200" preserveAspectRatio="none">
+                    <defs>
+                        <linearGradient id="pocketLeftGrad" x1="0%" y1="100%" x2="50%" y2="50%">
+                            <stop offset="0%" stop-color="#550f19" />
+                            <stop offset="100%" stop-color="#6f1523" />
+                        </linearGradient>
+                        <linearGradient id="pocketRightGrad" x1="100%" y1="100%" x2="50%" y2="50%">
+                            <stop offset="0%" stop-color="#5a101b" />
+                            <stop offset="100%" stop-color="#731625" />
+                        </linearGradient>
+                        <linearGradient id="pocketBottomGrad" x1="50%" y1="100%" x2="50%" y2="50%">
+                            <stop offset="0%" stop-color="#62121f" />
+                            <stop offset="100%" stop-color="#7c1828" />
+                        </linearGradient>
+                        <filter id="creaseShadow" x="-10%" y="-10%" width="120%" height="120%">
+                            <feDropShadow dx="0" dy="-2" stdDeviation="2.5" flood-color="#30070c" flood-opacity="0.5" />
+                        </filter>
+                    </defs>
+
+                    <!-- Left side triangle flap -->
+                    <polygon points="0,0 0,200 160,110" fill="url(#pocketLeftGrad)" />
+                    
+                    <!-- Right side triangle flap -->
+                    <polygon points="320,0 320,200 160,110" fill="url(#pocketRightGrad)" />
+                    
+                    <!-- Bottom triangle fold -->
+                    <polygon points="0,200 320,200 160,110" fill="url(#pocketBottomGrad)" filter="url(#creaseShadow)" />
+                    
+                    <!-- Crisp diagonal seam lines exactly as in photo -->
+                    <line x1="0" y1="200" x2="160" y2="110" stroke="#480c14" stroke-width="0.8" stroke-opacity="0.6" />
+                    <line x1="320" y1="200" x2="160" y2="110" stroke="#480c14" stroke-width="0.8" stroke-opacity="0.6" />
+                </svg>
+
+                <!-- TOP FLAP with exact shoulder cutouts from the image -->
+                <div class="env-flap-container" id="envFlap">
+                    <svg class="env-topflap-svg" viewBox="0 0 320 120" preserveAspectRatio="none">
+                        <defs>
+                            <linearGradient id="topFlapGrad" x1="50%" y1="0%" x2="50%" y2="100%">
+                                <stop offset="0%" stop-color="#8a1d2e" />
+                                <stop offset="70%" stop-color="#7a1827" />
+                                <stop offset="100%" stop-color="#69121f" />
+                            </linearGradient>
+                            <filter id="topFlapShadow" x="-5%" y="-5%" width="110%" height="130%">
+                                <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#2a050b" flood-opacity="0.6" />
+                            </filter>
+                        </defs>
+                        <!-- Top flap polygon matching image shoulders:
+                             Starts at (0, 16), up to (20, 0), across to (300, 0), down to (320, 16),
+                             then diagonal down to apex at (160, 116) -->
+                        <polygon points="0,16 22,0 298,0 320,16 160,116" fill="url(#topFlapGrad)" filter="url(#topFlapShadow)" />
+                        
+                        <!-- Subtle fold highlight line at top -->
+                        <line x1="22" y1="0.5" x2="298" y2="0.5" stroke="rgba(255,255,255,0.18)" stroke-width="1" />
+                    </svg>
+                </div>
+
+                <!-- ========================================================
+                     WAX SEAL: ORGANIC SHAPE REPLICATING THE PHOTO
+                     ======================================================== -->
+                <div class="seal-wrapper" id="waxSeal">
+                    <svg class="seal-svg" viewBox="0 0 100 100">
+                        <defs>
+                            <!-- Metallic antique gold gradient -->
+                            <radialGradient id="goldBulgeGrad" cx="36%" cy="32%" r="65%">
+                                <stop offset="0%" stop-color="#fff2c2" />
+                                <stop offset="18%" stop-color="#edd282" />
+                                <stop offset="42%" stop-color="#cba148" />
+                                <stop offset="72%" stop-color="#9a7224" />
+                                <stop offset="92%" stop-color="#694a12" />
+                                <stop offset="100%" stop-color="#4e350a" />
+                            </radialGradient>
+
+                            <!-- Recessed center circle gradient -->
+                            <radialGradient id="goldCenterGrad" cx="42%" cy="40%" r="58%">
+                                <stop offset="0%" stop-color="#f5e19e" />
+                                <stop offset="35%" stop-color="#cba148" />
+                                <stop offset="75%" stop-color="#916a1e" />
+                                <stop offset="100%" stop-color="#5e410d" />
+                            </radialGradient>
+
+                            <!-- Filter for realistic 3D shadow on molten wax -->
+                            <filter id="sealDepth" x="-20%" y="-20%" width="140%" height="140%">
+                                <feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#2d050c" flood-opacity="0.6" />
+                            </filter>
+
+                            <!-- Debossed text filter -->
+                            <filter id="deboss" x="-10%" y="-10%" width="120%" height="120%">
+                                <feDropShadow dx="0" dy="1" stdDeviation="0.4" flood-color="#ffeaa8" flood-opacity="0.3" />
+                                <feDropShadow dx="0" dy="-1" stdDeviation="0.4" flood-color="#2b1a04" flood-opacity="0.8" />
+                            </filter>
+                        </defs>
+
+                        <!-- Outer Organic Molten Wax Outline (Matching the exact bumps of the photo) -->
+                        <path d="M 50 6
+                                 C 64 5, 76 10, 84 20
+                                 C 92 30, 97 42, 94 56
+                                 C 91 70, 84 82, 72 90
+                                 C 60 97, 44 96, 32 91
+                                 C 20 86, 9 74, 6 59
+                                 C 3 44, 10 28, 22 17
+                                 C 32 8, 40 7, 50 6 Z"
+                              fill="url(#goldBulgeGrad)"
+                              filter="url(#sealDepth)" />
+
+                        <!-- Inner raised rim ring (created by stamp bezel pressing down) -->
+                        <circle cx="50" cy="51" r="33" fill="none" stroke="#7a5518" stroke-width="1.8" opacity="0.75" />
+                        <circle cx="50" cy="50" r="32" fill="none" stroke="#ffebb0" stroke-width="1" opacity="0.55" />
+
+                        <!-- Stamped Recessed Flat Floor -->
+                        <circle cx="50" cy="50.5" r="30" fill="url(#goldCenterGrad)" />
+
+                        <!-- Concentric subtle debossed groove inside seal -->
+                        <circle cx="50" cy="50.5" r="26.5" fill="none" stroke="#684711" stroke-width="1" opacity="0.6" />
+                        <circle cx="50" cy="51" r="26.5" fill="none" stroke="#ffeaa8" stroke-width="0.7" opacity="0.35" />
+
+                        <!-- STAMPED TEXT: PREAS AWARDS -->
+                        <g filter="url(#deboss)">
+                            <text x="50" y="46"
+                                  text-anchor="middle"
+                                  font-family="'Cinzel', 'Playfair Display', serif"
+                                  font-weight="800"
+                                  font-size="9.5"
+                                  letter-spacing="2"
+                                  fill="#48300a">PREAS</text>
+
+                            <text x="50" y="58"
+                                  text-anchor="middle"
+                                  font-family="'Cinzel', 'Playfair Display', serif"
+                                  font-weight="800"
+                                  font-size="8.2"
+                                  letter-spacing="2.2"
+                                  fill="#48300a">AWARDS</text>
+                        </g>
+                    </svg>
+                </div>
+
+            </div>
+
+            <!-- Tap instruction hint -->
+            <div class="tap-prompt">
+                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 14h-2v-2h2v2zm0-4h-2V7h2v5z"/></svg>
+                <span>Tocar para abrir</span>
+            </div>
+
         </div>
 
-        <div class="envelope-wrapper" id="envelope" onclick="openEnvelope()">
-            <div class="envelope-flap"></div>
-            <div class="env-side-l"></div>
-            <div class="env-side-r"></div>
-            <div class="envelope-body">
-                <div class="envelope-lining"></div>
-            </div>
-            <div class="envelope-pocket"></div>
+    </div>
 
-            <div class="wax-seal">
-                <div class="seal-outer">
-                    <div class="seal-bumps"></div>
-                    <div class="seal-inner">
-                        <span class="seal-text">PREAS<br>AWARDS</span>
-                    </div>
+    <!-- ========================================================
+         SCENE 2: CEREMONY INVITATION CARD (FULL PRESENTATION)
+         ======================================================== -->
+    <div class="scene-card-view" id="sceneCardView">
+        
+        <canvas class="gold-particles-canvas" id="goldCanvas"></canvas>
+
+        <div class="invitation-card" id="mainCard">
+            <div class="card-top-bar"></div>
+            
+            <div class="card-frame"></div>
+            <div class="card-frame-inner"></div>
+
+            <div class="corner-notch cn-tl"></div>
+            <div class="corner-notch cn-tr"></div>
+            <div class="corner-notch cn-bl"></div>
+            <div class="corner-notch cn-br"></div>
+
+            <!-- Header -->
+            <div class="card-hero">
+                <div class="seal-mini-badge">
+                    <svg viewBox="0 0 100 100">
+                        <circle cx="50" cy="50" r="46" fill="url(#goldBulgeGrad)" />
+                        <circle cx="50" cy="50" r="36" fill="url(#goldCenterGrad)" stroke="#55390c" stroke-width="1.5" />
+                        <text x="50" y="55" text-anchor="middle" font-family="'Cinzel', serif" font-weight="900" font-size="19" fill="#3b2606">P</text>
+                    </svg>
+                </div>
+
+                <div class="hero-kicker">Invitación Oficial</div>
+                <h1 class="hero-title-main">PREAS</h1>
+                <div class="hero-title-sub">Awards</div>
+                
+                <div class="hero-edition">
+                    <span>EDICIÓN 2026</span>
                 </div>
             </div>
 
-            <div class="open-hint">
-                Toca para abrir
-                <span class="arrow">▼</span>
-            </div>
-        </div>
-    </div>
+            <div class="gold-line"></div>
 
-    <!-- Sparkle layer -->
-    <div class="sparkles-layer" id="sparkles"></div>
+            <!-- Body Message -->
+            <div class="card-body-content">
+                <p class="honor-paragraph">
+                    Es un verdadero honor comunicarte que has sido <em>nominado/a</em> para la edición 2026 de los <em>PREAS AWARDS</em>.
+                </p>
 
-    <!-- =================== SCENE 2: CARD =================== -->
-    <div class="scene-card" id="sceneCard">
-        <div class="card-scroll-area">
-            <div class="card" id="card">
-                <div class="card-inner">
-                    <div class="accent-bar"></div>
-                    <div class="card-border-frame"></div>
+                <p class="honor-paragraph">
+                    Tu presencia es fundamental para celebrar juntos este reconocimiento en una noche inolvidable.
+                </p>
 
-                    <div class="corner c-tl"></div>
-                    <div class="corner c-tr"></div>
-                    <div class="corner c-bl"></div>
-                    <div class="corner c-br"></div>
+                <p class="honor-paragraph">
+                    Te esperamos para compartir la gala de premiación.
+                </p>
 
-                    <!-- Trophy emblem -->
-                    <div class="emblem-area">
-                        <div class="ring-spin"></div>
-                        <div class="ring-spin-2"></div>
-                        <div class="trophy-icon">🏆</div>
+                <!-- Information Section -->
+                <div class="event-details-card">
+                    <div class="detail-item">
+                        <span class="d-icon">📅</span>
+                        <span><strong>Sábado 26 de Diciembre</strong></span>
                     </div>
 
-                    <!-- Header -->
-                    <div class="card-header">
-                        <div class="tag">Invitación exclusiva</div>
-                        <div class="title">PREAS</div>
-                        <div class="subtitle">Awards</div>
-                        <div class="year-badge">2 0 2 6</div>
+                    <div class="detail-item">
+                        <span class="d-icon">⏰</span>
+                        <span><strong>17:00 hs</strong> <span class="sub-note">(se ruega puntualidad)</span></span>
                     </div>
 
-                    <div class="div-gold"></div>
-
-                    <!-- Body -->
-                    <div class="card-body">
-                        <p class="msg reveal">
-                            Es un verdadero honor comunicarte que has sido
-                            <em>nominado/a</em> para la edición 2026 de los
-                            <em>PREAS AWARDS</em>.
-                        </p>
-                        <p class="msg reveal">
-                            Tu presencia es fundamental para celebrar juntos
-                            este reconocimiento en una noche inolvidable.
-                        </p>
-                        <p class="msg reveal">
-                            Te esperamos para compartir la gala de premiación.
-                        </p>
-
-                        <div class="stars-row reveal">★ ★ ★</div>
-                        <div class="div-red"></div>
-
-                        <div class="info-box reveal">
-                            <div class="info-row">
-                                <span class="icon">📅</span>
-                                <span class="text"><strong>Sábado 26 de Diciembre</strong></span>
-                            </div>
-                            <div class="info-row">
-                                <span class="icon">🕐</span>
-                                <span class="text"><strong>17:00 hs</strong> <span class="note">(se ruega puntualidad)</span></span>
-                            </div>
-                            <div class="info-row">
-                                <span class="icon">📍</span>
-                                <span class="text"><strong>Av. Perón 4258</strong> — José C. Paz</span>
-                            </div>
-                        </div>
-
-                        <div class="dress-box reveal">
-                            <div class="label">Dress Code</div>
-                            <div class="value">Elegante / de entrega de premios</div>
-                        </div>
+                    <div class="detail-item">
+                        <span class="d-icon">📍</span>
+                        <span><strong>Av. Perón 4258</strong> — José C. Paz</span>
                     </div>
+                </div>
 
-                    <div class="div-gold" style="margin-top: 10px;"></div>
+                <!-- Dress Code -->
+                <div class="dress-code-badge">
+                    <div class="dc-title">Dress Code</div>
+                    <div class="dc-val">Elegante / de entrega de premios</div>
+                </div>
 
-                    <!-- CTA -->
-                    <div class="cta-area reveal">
-                        <p class="cta-msg">Por favor, confirmanos tu asistencia<br>para reservar tu lugar en la ceremonia.</p>
-                        <div class="btn-wrapper">
-                            <a class="rsvp-btn" href="javascript:void(0)" onclick="confirmRSVP()">Confirmar Asistencia</a>
-                        </div>
-                    </div>
+                <!-- RSVP Area -->
+                <div class="rsvp-container">
+                    <p class="rsvp-request-text">
+                        Por favor, confirmanos tu asistencia para reservar tu lugar en la ceremonia.
+                    </p>
 
-                    <div class="card-footer">
-                        <div class="stars-row">✦ ✦ ✦</div>
-                        <p class="congrats" id="congrats">¡Felicitaciones por la nominación!</p>
-                    </div>
-
-                    <div class="accent-bar"></div>
+                    <button class="rsvp-button-main" onclick="openConfirmationModal()">
+                        <span>Confirmar Asistencia</span>
+                    </button>
                 </div>
             </div>
+
+            <div class="gold-line" style="margin-top: 5px; margin-bottom: 5px;"></div>
+
+            <!-- Card Footer -->
+            <div class="card-close-statement">
+                <div class="congrats-text">¡Felicitaciones por la nominación!</div>
+            </div>
+
+            <div class="card-top-bar" style="transform: rotate(180deg);"></div>
         </div>
+
+        <!-- Button to view envelope again -->
+        <button class="replay-envelope-btn" onclick="replayEnvelope()">
+            ↺ Ver sobre nuevamente
+        </button>
+
     </div>
 
-    <!-- Confirm Overlay -->
-    <div class="overlay" id="confirmOverlay">
-        <div class="overlay-box">
-            <span class="big-icon">🏆</span>
-            <h2>¡Asistencia Confirmada!</h2>
-            <p>Gracias por confirmar. Te esperamos en la gala de los <em style="color:var(--gold-light)">PREAS AWARDS 2026</em>.</p>
-            <button class="close-btn" onclick="closeOverlay()">Cerrar</button>
+    <!-- Confirmation Modal -->
+    <div class="modal-overlay" id="confirmModal">
+        <div class="modal-box">
+            <div style="font-size: 46px; margin-bottom: 5px;">🏆</div>
+            <h3>¡Lugar Reservado!</h3>
+            <p>Tu confirmación para los <strong>PREAS AWARDS 2026</strong> ha sido registrada con éxito. ¡Nos vemos en la ceremonia!</p>
+            <button class="modal-close-btn" onclick="closeConfirmationModal()">Aceptar</button>
         </div>
     </div>
 
     <script>
-    (function () {
-        /* ===== PARTICLES ===== */
-        const pCont = document.getElementById('particles');
-        for (let i = 0; i < 35; i++) {
-            const p = document.createElement('div');
-            p.className = 'particle';
-            p.style.left = Math.random() * 100 + '%';
-            const size = 1.5 + Math.random() * 3;
-            p.style.width = size + 'px';
-            p.style.height = size + 'px';
-            p.style.animationDuration = (10 + Math.random() * 18) + 's';
-            p.style.animationDelay = (Math.random() * 20) + 's';
-            pCont.appendChild(p);
-        }
+        let isOpening = false;
 
-        /* ===== OPEN ENVELOPE ===== */
-        let opened = false;
+        function handleEnvelopeClick() {
+            if (isOpening) return;
+            isOpening = true;
 
-        window.openEnvelope = function () {
-            if (opened) return;
-            opened = true;
+            const envelope = document.getElementById('envelopeRoot');
+            const sceneEnvelope = document.getElementById('sceneEnvelope');
+            const sceneCardView = document.getElementById('sceneCardView');
 
-            const envelope = document.getElementById('envelope');
-            const sceneEnv = document.getElementById('sceneEnvelope');
-            const sceneCardEl = document.getElementById('sceneCard');
-            const card = document.getElementById('card');
-            const introTitle = document.getElementById('introTitle');
+            // 1. Trigger realistic flap opening
+            envelope.classList.add('open');
 
-            // 1. Flap opens
-            envelope.classList.add('opened');
-            burstSparks(window.innerWidth / 2, window.innerHeight / 2, 50);
+            // 2. Transition from envelope showcase to full card view
+            setTimeout(() => {
+                sceneEnvelope.classList.add('dismissed');
 
-            // 2. Fade out intro title
-            introTitle.style.transition = 'opacity 0.5s ease';
-            introTitle.style.opacity = '0';
-
-            // 3. After envelope slides down, switch scenes
-            setTimeout(function () {
-                sceneEnv.classList.add('dismissed');
-                sceneCardEl.classList.add('active');
-                document.body.classList.add('scrollable');
-
-                // 4. Card appears
-                setTimeout(function () {
-                    card.classList.add('visible');
-                    launchConfetti();
-
-                    // 5. Staggered reveal for card content
-                    staggerReveal();
+                setTimeout(() => {
+                    sceneEnvelope.style.display = 'none';
+                    sceneCardView.classList.add('active');
+                    document.body.classList.add('scroll-unlocked');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    startGoldParticles();
                 }, 400);
-            }, 900);
-        };
 
-        /* ===== STAGGERED CONTENT REVEAL ===== */
-        function staggerReveal() {
-            const els = document.querySelectorAll('.reveal');
-            els.forEach(function (el, i) {
-                setTimeout(function () {
-                    el.classList.add('shown');
-                }, 1400 + i * 250);
+            }, 1050);
+        }
+
+        function replayEnvelope() {
+            const envelope = document.getElementById('envelopeRoot');
+            const sceneEnvelope = document.getElementById('sceneEnvelope');
+            const sceneCardView = document.getElementById('sceneCardView');
+
+            sceneCardView.classList.remove('active');
+            document.body.classList.remove('scroll-unlocked');
+
+            setTimeout(() => {
+                sceneEnvelope.style.display = 'flex';
+                // Force layout reflow
+                void sceneEnvelope.offsetWidth;
+
+                envelope.classList.remove('open');
+                sceneEnvelope.classList.remove('dismissed');
+                isOpening = false;
+            }, 300);
+        }
+
+        function openConfirmationModal() {
+            document.getElementById('confirmModal').classList.add('active');
+        }
+
+        function closeConfirmationModal() {
+            document.getElementById('confirmModal').classList.remove('active');
+        }
+
+        /* ===== CANVAS GOLD PARTICLES ON CARD VIEW ===== */
+        function startGoldParticles() {
+            const canvas = document.getElementById('goldCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            
+            let width = canvas.width = window.innerWidth;
+            let height = canvas.height = window.innerHeight;
+
+            window.addEventListener('resize', () => {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
             });
 
-            // Congrats last
-            setTimeout(function () {
-                document.getElementById('congrats').classList.add('shown');
-            }, 1400 + els.length * 250 + 300);
-        }
+            const particles = [];
+            const colors = ['#fff2c2', '#edd282', '#cba148', '#881622', '#ffffff'];
 
-        /* ===== SPARK BURST ===== */
-        function burstSparks(cx, cy, count) {
-            const container = document.getElementById('sparkles');
-            for (let i = 0; i < count; i++) {
-                const s = document.createElement('div');
-                s.className = 'spark';
-                const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.3;
-                const dist = 60 + Math.random() * 180;
-                const sx = Math.cos(angle) * dist;
-                const sy = Math.sin(angle) * dist;
-                const size = 2 + Math.random() * 5;
-                s.style.left = cx + 'px';
-                s.style.top = cy + 'px';
-                s.style.width = size + 'px';
-                s.style.height = size + 'px';
-                s.style.setProperty('--sx', sx + 'px');
-                s.style.setProperty('--sy', sy + 'px');
-                s.style.background = ['#c9a84c','#e0c872','#f5e6a3','#a52222','#c0392b'][Math.floor(Math.random()*5)];
-                s.style.animation = 'spark-fly ' + (0.5 + Math.random() * 0.6) + 's ease-out forwards';
-                s.style.animationDelay = (Math.random() * 0.15) + 's';
-                container.appendChild(s);
+            for (let i = 0; i < 40; i++) {
+                particles.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    r: Math.random() * 2 + 0.8,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    vx: (Math.random() - 0.5) * 0.4,
+                    vy: -Math.random() * 0.6 - 0.2,
+                    alpha: Math.random() * 0.7 + 0.2
+                });
             }
-            setTimeout(function () { container.innerHTML = ''; }, 1200);
-        }
 
-        /* ===== CONFETTI RAIN ===== */
-        function launchConfetti() {
-            const colors = ['#c9a84c','#e0c872','#8b1a1a','#a52222','#f5e6a3','#c0392b','#ffffff'];
-            for (let i = 0; i < 60; i++) {
-                setTimeout(function () {
-                    const c = document.createElement('div');
-                    c.className = 'confetti-piece';
-                    c.style.left = Math.random() * 100 + 'vw';
-                    c.style.width = (5 + Math.random() * 7) + 'px';
-                    c.style.height = (8 + Math.random() * 10) + 'px';
-                    c.style.background = colors[Math.floor(Math.random() * colors.length)];
-                    c.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
-                    c.style.setProperty('--rz', (Math.random() * 720 - 360) + 'deg');
-                    c.style.setProperty('--rx', (Math.random() * 720) + 'deg');
-                    c.style.animationDuration = (2 + Math.random() * 2.5) + 's';
-                    c.style.animationDelay = '0s';
-                    document.body.appendChild(c);
-                    setTimeout(function () { c.remove(); }, 5000);
-                }, i * 50);
+            function render() {
+                ctx.clearRect(0, 0, width, height);
+                for (let p of particles) {
+                    ctx.save();
+                    ctx.globalAlpha = p.alpha;
+                    ctx.fillStyle = p.color;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.restore();
+
+                    p.x += p.vx;
+                    p.y += p.vy;
+
+                    if (p.y < -10) {
+                        p.y = height + 10;
+                        p.x = Math.random() * width;
+                    }
+                }
+                requestAnimationFrame(render);
             }
+            render();
         }
-
-        /* ===== RSVP ===== */
-        window.confirmRSVP = function () {
-            document.getElementById('confirmOverlay').classList.add('show');
-            burstSparks(window.innerWidth / 2, window.innerHeight / 2, 40);
-            launchConfetti();
-        };
-
-        window.closeOverlay = function () {
-            document.getElementById('confirmOverlay').classList.remove('show');
-        };
-
-        /* ===== SCROLL-BASED PARALLAX ON CARD VIEW ===== */
-        window.addEventListener('scroll', function () {
-            const rings = document.querySelectorAll('.ring-spin, .ring-spin-2');
-            const scrollY = window.scrollY || window.pageYOffset;
-            rings.forEach(function (r) {
-                r.style.transform = 'translateX(-50%) rotate(' + (scrollY * 0.3) + 'deg)';
-            });
-        });
-
-    })();
     </script>
 
 </body>
