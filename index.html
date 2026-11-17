@@ -274,19 +274,35 @@
         }
 
         /* ========================================================
-           WAX SEAL: ORGANIC SHAPE WITH GLEAM & SHOCKWAVE
+           WAX SEAL: LUXURY ROYAL GALA EMBOSSED SEAL
            ======================================================== */
         .seal-wrapper {
             position: absolute;
             top: 55%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: clamp(66px, 19vw, 84px);
-            height: clamp(66px, 19vw, 84px);
+            width: clamp(74px, 22vw, 92px);
+            height: clamp(74px, 22vw, 92px);
             z-index: 10;
             cursor: pointer;
             transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.5s ease;
-            filter: drop-shadow(0 6px 16px rgba(70, 10, 18, 0.45));
+            filter: drop-shadow(0 8px 22px rgba(70, 10, 18, 0.55)) drop-shadow(0 2px 6px rgba(0,0,0,0.4));
+        }
+
+        /* Pulsing radiant gold halo around the seal */
+        .seal-halo-glow {
+            position: absolute;
+            inset: -14px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 230, 140, 0.35) 0%, rgba(201, 168, 76, 0.18) 45%, transparent 72%);
+            pointer-events: none;
+            animation: seal-halo-pulse 3s ease-in-out infinite;
+            z-index: -1;
+        }
+
+        @keyframes seal-halo-pulse {
+            0%, 100% { transform: scale(0.92); opacity: 0.6; }
+            50% { transform: scale(1.12); opacity: 1; }
         }
 
         /* Periodic metallic gleam across wax seal */
@@ -309,19 +325,19 @@
             background: linear-gradient(
                 90deg,
                 transparent 0%,
-                rgba(255, 255, 255, 0.4) 45%,
-                rgba(255, 245, 200, 0.7) 50%,
-                rgba(255, 255, 255, 0.4) 55%,
+                rgba(255, 255, 255, 0.5) 45%,
+                rgba(255, 248, 220, 0.85) 50%,
+                rgba(255, 255, 255, 0.5) 55%,
                 transparent 100%
             );
             transform: rotate(30deg);
-            animation: seal-gleam 4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+            animation: seal-gleam 3.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
         }
 
         @keyframes seal-gleam {
-            0%, 65% { left: -120%; opacity: 0; }
-            70% { opacity: 0.8; }
-            85% { left: 160%; opacity: 0; }
+            0%, 60% { left: -120%; opacity: 0; }
+            65% { opacity: 0.9; }
+            80% { left: 160%; opacity: 0; }
             100% { left: 160%; opacity: 0; }
         }
 
@@ -333,7 +349,7 @@
             transform: translate(-50%, -50%) scale(0.6);
             width: 100%;
             height: 100%;
-            border: 2px solid var(--gold-shine);
+            border: 2.5px solid var(--gold-shine);
             border-radius: 50%;
             opacity: 0;
             pointer-events: none;
@@ -1104,84 +1120,135 @@
                 </div>
 
                 <!-- ========================================================
-                     WAX SEAL: ORGANIC SHAPE REPLICATING THE PHOTO
+                     WAX SEAL: LUXURY ROYAL GALA EMBOSSED SEAL
                      ======================================================== -->
                 <div class="seal-wrapper" id="waxSeal">
+                    <div class="seal-halo-glow"></div>
                     <div class="seal-gleam-overlay"></div>
                     <div class="seal-shockwave"></div>
                     
                     <svg class="seal-svg" viewBox="0 0 100 100">
                         <defs>
-                            <!-- Metallic antique gold gradient -->
-                            <radialGradient id="goldBulgeGrad" cx="36%" cy="32%" r="65%">
+                            <!-- Ultra-vibrant 24K Liquid Gold gradient for outer molten wax -->
+                            <radialGradient id="goldBulgeGrad" cx="34%" cy="28%" r="68%">
+                                <stop offset="0%" stop-color="#fff8db" />
+                                <stop offset="14%" stop-color="#fde086" />
+                                <stop offset="38%" stop-color="#dfa838" />
+                                <stop offset="68%" stop-color="#ab771d" />
+                                <stop offset="88%" stop-color="#6f4b0f" />
+                                <stop offset="100%" stop-color="#462c06" />
+                            </radialGradient>
+
+                            <!-- Medallion center coin gradient -->
+                            <radialGradient id="goldCenterGrad" cx="44%" cy="38%" r="60%">
                                 <stop offset="0%" stop-color="#fff2c2" />
-                                <stop offset="18%" stop-color="#edd282" />
-                                <stop offset="42%" stop-color="#cba148" />
-                                <stop offset="72%" stop-color="#9a7224" />
-                                <stop offset="92%" stop-color="#694a12" />
-                                <stop offset="100%" stop-color="#4e350a" />
+                                <stop offset="25%" stop-color="#edd282" />
+                                <stop offset="55%" stop-color="#c69632" />
+                                <stop offset="85%" stop-color="#8d6215" />
+                                <stop offset="100%" stop-color="#553808" />
                             </radialGradient>
 
-                            <!-- Recessed center circle gradient -->
-                            <radialGradient id="goldCenterGrad" cx="42%" cy="40%" r="58%">
-                                <stop offset="0%" stop-color="#f5e19e" />
-                                <stop offset="35%" stop-color="#cba148" />
-                                <stop offset="75%" stop-color="#916a1e" />
-                                <stop offset="100%" stop-color="#5e410d" />
-                            </radialGradient>
+                            <!-- Linear sheen for heraldic laurel leaves -->
+                            <linearGradient id="laurelGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#fff7ce" />
+                                <stop offset="45%" stop-color="#dfab3c" />
+                                <stop offset="80%" stop-color="#8e6314" />
+                                <stop offset="100%" stop-color="#523607" />
+                            </linearGradient>
 
-                            <!-- Filter for realistic 3D shadow on molten wax -->
-                            <filter id="sealDepth" x="-20%" y="-20%" width="140%" height="140%">
-                                <feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#2d050c" flood-opacity="0.6" />
+                            <!-- Deep 3D drop shadow -->
+                            <filter id="sealDepth" x="-25%" y="-25%" width="150%" height="150%">
+                                <feDropShadow dx="0" dy="4" stdDeviation="3.5" flood-color="#2a040b" flood-opacity="0.65" />
+                                <feDropShadow dx="0" dy="1" stdDeviation="1" flood-color="#150104" flood-opacity="0.4" />
                             </filter>
 
-                            <!-- Debossed text filter -->
-                            <filter id="deboss" x="-10%" y="-10%" width="120%" height="120%">
-                                <feDropShadow dx="0" dy="1" stdDeviation="0.4" flood-color="#ffeaa8" flood-opacity="0.3" />
-                                <feDropShadow dx="0" dy="-1" stdDeviation="0.4" flood-color="#2b1a04" flood-opacity="0.8" />
+                            <!-- Chisel embossed relief filter for text and insignia -->
+                            <filter id="chiselRelief" x="-15%" y="-15%" width="130%" height="130%">
+                                <feDropShadow dx="0" dy="1.2" stdDeviation="0.4" flood-color="#fff5cf" flood-opacity="0.5" />
+                                <feDropShadow dx="0" dy="-1.2" stdDeviation="0.4" flood-color="#2d1a03" flood-opacity="0.9" />
                             </filter>
                         </defs>
 
-                        <!-- Outer Organic Molten Wax Outline (Matching the exact bumps of the photo) -->
-                        <path d="M 50 6
-                                 C 64 5, 76 10, 84 20
-                                 C 92 30, 97 42, 94 56
-                                 C 91 70, 84 82, 72 90
-                                 C 60 97, 44 96, 32 91
-                                 C 20 86, 9 74, 6 59
-                                 C 3 44, 10 28, 22 17
-                                 C 32 8, 40 7, 50 6 Z"
+                        <!-- Outer Organic Molten Wax Puddle with deep organic lobes -->
+                        <path d="M 50 4
+                                 C 64 3, 77 9, 85 19
+                                 C 94 30, 98 42, 96 56
+                                 C 93 72, 85 84, 73 92
+                                 C 60 100, 42 98, 30 92
+                                 C 18 86, 7 74, 4 58
+                                 C 2 42, 9 26, 21 15
+                                 C 31 6, 40 5, 50 4 Z"
                               fill="url(#goldBulgeGrad)"
                               filter="url(#sealDepth)" />
 
-                        <!-- Inner raised rim ring (created by stamp bezel pressing down) -->
-                        <circle cx="50" cy="51" r="33" fill="none" stroke="#7a5518" stroke-width="1.8" opacity="0.75" />
-                        <circle cx="50" cy="50" r="32" fill="none" stroke="#ffebb0" stroke-width="1" opacity="0.55" />
+                        <!-- Outer Rim Highlight and Bevel -->
+                        <circle cx="50" cy="51" r="35" fill="none" stroke="#684711" stroke-width="2" opacity="0.8" />
+                        <circle cx="50" cy="49.5" r="34" fill="none" stroke="#fff4cc" stroke-width="1.2" opacity="0.6" />
 
-                        <!-- Stamped Recessed Flat Floor -->
-                        <circle cx="50" cy="50.5" r="30" fill="url(#goldCenterGrad)" />
+                        <!-- Stamped Recessed Coin Floor -->
+                        <circle cx="50" cy="50.5" r="32.5" fill="url(#goldCenterGrad)" />
 
-                        <!-- Concentric subtle debossed groove inside seal -->
-                        <circle cx="50" cy="50.5" r="26.5" fill="none" stroke="#684711" stroke-width="1" opacity="0.6" />
-                        <circle cx="50" cy="51" r="26.5" fill="none" stroke="#ffeaa8" stroke-width="0.7" opacity="0.35" />
+                        <!-- Beaded Milgrain Ridge (Pearls / Spheres around inner coin) -->
+                        <circle cx="50" cy="50.5" r="30.5" fill="none" stroke="#ffe594" stroke-width="1.8" stroke-dasharray="0.1, 3.8" stroke-linecap="round" opacity="0.85" />
+                        <circle cx="50" cy="51.2" r="30.5" fill="none" stroke="#4a3107" stroke-width="1.5" stroke-dasharray="0.1, 3.8" stroke-linecap="round" opacity="0.75" />
 
-                        <!-- STAMPED TEXT: PREAS AWARDS -->
-                        <g filter="url(#deboss)">
-                            <text x="50" y="46"
+                        <!-- Concentric inner groove -->
+                        <circle cx="50" cy="50.5" r="28" fill="none" stroke="#6a4911" stroke-width="0.8" opacity="0.5" />
+                        <circle cx="50" cy="50" r="27.5" fill="none" stroke="#fff1bd" stroke-width="0.6" opacity="0.4" />
+
+                        <!-- Heraldic Laurel Leaves & Stars Insignia -->
+                        <g filter="url(#chiselRelief)" fill="url(#laurelGrad)">
+                            <!-- Left Laurel Branch -->
+                            <path d="M 23 48 C 22 56, 26 64, 32 70 C 31 66, 29 60, 29 54 Z" />
+                            <path d="M 20 40 C 23 43, 27 45, 27 49 C 24 48, 22 45, 20 40 Z" />
+                            <path d="M 22 32 C 25 35, 28 38, 27 42 C 25 40, 23 37, 22 32 Z" />
+                            <path d="M 26 53 C 28 57, 31 61, 35 64 C 33 60, 31 56, 28 53 Z" />
+                            <path d="M 27 25 C 30 28, 33 32, 31 36 C 29 34, 28 30, 27 25 Z" />
+
+                            <!-- Right Laurel Branch -->
+                            <path d="M 77 48 C 78 56, 74 64, 68 70 C 69 66, 71 60, 71 54 Z" />
+                            <path d="M 80 40 C 77 43, 73 45, 73 49 C 76 48, 78 45, 80 40 Z" />
+                            <path d="M 78 32 C 75 35, 72 38, 73 42 C 75 40, 77 37, 78 32 Z" />
+                            <path d="M 74 53 C 72 57, 69 61, 65 64 C 67 60, 69 56, 72 53 Z" />
+                            <path d="M 73 25 C 70 28, 67 32, 69 36 C 71 34, 72 30, 73 25 Z" />
+
+                            <!-- Top Central Gala Stars -->
+                            <!-- Center large star -->
+                            <polygon points="50,21 51.5,25.2 56,25.5 52.4,28.5 53.6,32.8 50,30.2 46.4,32.8 47.6,28.5 44,25.5 48.5,25.2" />
+                            <!-- Left mini star -->
+                            <polygon points="41,25 41.8,27.2 44.2,27.3 42.3,28.8 42.9,31 41,29.7 39.1,31 39.7,28.8 37.8,27.3 40.2,27.2" />
+                            <!-- Right mini star -->
+                            <polygon points="59,25 59.8,27.2 62.2,27.3 60.3,28.8 60.9,31 59,29.7 57.1,31 57.7,28.8 55.8,27.3 58.2,27.2" />
+                        </g>
+
+                        <!-- STAMPED CHISELED TEXT: PREAS AWARDS -->
+                        <g filter="url(#chiselRelief)">
+                            <!-- PREAS -->
+                            <text x="50" y="47"
                                   text-anchor="middle"
                                   font-family="'Cinzel', 'Playfair Display', serif"
-                                  font-weight="800"
-                                  font-size="9.5"
-                                  letter-spacing="2"
-                                  fill="#48300a">PREAS</text>
+                                  font-weight="900"
+                                  font-size="10.5"
+                                  letter-spacing="2.8"
+                                  fill="#482e07">PREAS</text>
 
+                            <!-- AWARDS -->
                             <text x="50" y="58"
                                   text-anchor="middle"
                                   font-family="'Cinzel', 'Playfair Display', serif"
-                                  font-weight="800"
-                                  font-size="8.2"
-                                  letter-spacing="2.2"
-                                  fill="#48300a">AWARDS</text>
+                                  font-weight="900"
+                                  font-size="8.8"
+                                  letter-spacing="3.2"
+                                  fill="#482e07">AWARDS</text>
+
+                            <!-- • 2026 • -->
+                            <text x="50" y="68"
+                                  text-anchor="middle"
+                                  font-family="'Cinzel', 'Montserrat', serif"
+                                  font-weight="700"
+                                  font-size="5.5"
+                                  letter-spacing="3.5"
+                                  fill="#65420d">• 2026 •</text>
                         </g>
                     </svg>
                 </div>
