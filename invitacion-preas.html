@@ -1,0 +1,1293 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>PREAS AWARDS 2026 — Invitación Exclusiva</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --black: #0a0a0a;
+            --black-light: #1a1a1a;
+            --gold: #c9a84c;
+            --gold-light: #e0c872;
+            --gold-dark: #a8893a;
+            --gold-shine: #f5e6a3;
+            --red: #8b1a1a;
+            --red-light: #a52222;
+            --red-accent: #c0392b;
+            --cream: #faf5e8;
+            --text-light: #f0ece0;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html, body {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+            height: 100%;
+        }
+
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: #000;
+            min-height: 100vh;
+            min-height: 100dvh;
+            overflow-y: hidden;
+            position: relative;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body.scrollable {
+            overflow-y: auto;
+        }
+
+        /* =========================================
+           SCENE 1: INTRO / ENVELOPE SCREEN
+           ========================================= */
+        .scene-envelope {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%;
+            height: 100vh;
+            height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: radial-gradient(ellipse at 50% 40%, #1a1a1a 0%, #050505 70%, #000 100%);
+            overflow: hidden;
+            z-index: 100;
+            transition: transform 1.2s cubic-bezier(0.76, 0, 0.24, 1), opacity 0.8s ease;
+        }
+
+        .scene-envelope.dismissed {
+            transform: scale(0.85) translateY(-30px);
+            opacity: 0;
+            pointer-events: none;
+            display: none;
+        }
+
+        /* Ambient light behind envelope */
+        .ambient-light {
+            position: absolute;
+            width: 350px;
+            height: 350px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -55%);
+            animation: ambient-pulse 4s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes ambient-pulse {
+            0%, 100% { transform: translate(-50%, -55%) scale(1); opacity: 0.6; }
+            50% { transform: translate(-50%, -55%) scale(1.15); opacity: 1; }
+        }
+
+        /* ===== PARTICLES ===== */
+        .particles {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: var(--gold);
+            opacity: 0;
+            animation: float-up linear infinite;
+        }
+
+        @keyframes float-up {
+            0% { opacity: 0; transform: translateY(0) scale(0); }
+            15% { opacity: 0.7; transform: scale(1); }
+            85% { opacity: 0.2; }
+            100% { opacity: 0; transform: translateY(-100vh) scale(0.5); }
+        }
+
+        /* ===== INTRO TITLE (fades out) ===== */
+        .intro-title {
+            position: absolute;
+            top: 12%;
+            text-align: center;
+            opacity: 0;
+            animation: intro-fade-in 1.5s ease 0.5s forwards;
+            z-index: 2;
+        }
+
+        .intro-title span {
+            display: block;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 10px;
+            font-weight: 400;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            color: var(--gold);
+            opacity: 0.5;
+        }
+
+        .intro-title h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(28px, 8vw, 42px);
+            font-weight: 700;
+            color: var(--gold);
+            letter-spacing: 6px;
+            margin-top: 6px;
+            text-shadow: 0 0 30px rgba(201,168,76,0.3);
+        }
+
+        @keyframes intro-fade-in {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== ENVELOPE ===== */
+        .envelope-wrapper {
+            position: relative;
+            width: clamp(280px, 80vw, 360px);
+            height: clamp(190px, 54vw, 245px);
+            cursor: pointer;
+            z-index: 5;
+            opacity: 0;
+            animation: envelope-appear 1s cubic-bezier(0.4, 0, 0.2, 1) 1s forwards;
+            transition: transform 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+        }
+
+        @keyframes envelope-appear {
+            0% { opacity: 0; transform: scale(0.8) translateY(30px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        /* Hover effect – only on desktop */
+        @media (hover: hover) {
+            .envelope-wrapper:not(.opened):hover {
+                transform: scale(1.03) translateY(-4px);
+            }
+            .envelope-wrapper:not(.opened):hover .seal-outer {
+                transform: scale(1.08);
+                box-shadow: 0 4px 12px rgba(0,0,0,0.5), 0 0 35px rgba(201,168,76,0.45);
+            }
+        }
+
+        .envelope-wrapper.opened {
+            transform: translateY(50vh) scale(0.5);
+            opacity: 0;
+            pointer-events: none;
+            transition: transform 1.2s cubic-bezier(0.76, 0, 0.24, 1), opacity 0.6s ease 0.6s;
+        }
+
+        /* Envelope Body */
+        .envelope-body {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 76%;
+            background: linear-gradient(160deg, #1c1c1c 0%, #0d0d0d 50%, #131313 100%);
+            border-radius: 0 0 6px 6px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.04);
+            z-index: 3;
+            overflow: hidden;
+        }
+
+        .envelope-body::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(
+                55deg, transparent, transparent 3px,
+                rgba(255,255,255,0.006) 3px, rgba(255,255,255,0.006) 6px
+            );
+        }
+
+        .envelope-lining {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(201,168,76,0.12) 0%, transparent 40%);
+        }
+
+        /* Front pocket */
+        .envelope-pocket {
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 0; height: 0;
+            border-left: calc(clamp(280px, 80vw, 360px) / 2) solid transparent;
+            border-right: calc(clamp(280px, 80vw, 360px) / 2) solid transparent;
+            border-bottom: calc(clamp(190px, 54vw, 245px) * 0.47) solid #151515;
+            z-index: 4;
+        }
+
+        /* Top flap */
+        .envelope-flap {
+            position: absolute;
+            top: 0; left: 0;
+            width: 0; height: 0;
+            border-left: calc(clamp(280px, 80vw, 360px) / 2) solid transparent;
+            border-right: calc(clamp(280px, 80vw, 360px) / 2) solid transparent;
+            border-top: calc(clamp(190px, 54vw, 245px) * 0.6) solid #181818;
+            transform-origin: top center;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 5;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5));
+        }
+
+        .envelope-wrapper.opened .envelope-flap {
+            transform: rotateX(180deg);
+            z-index: 1;
+        }
+
+        /* Side triangles */
+        .env-side-l, .env-side-r {
+            position: absolute;
+            bottom: 0;
+            width: 0; height: 0;
+            z-index: 2;
+        }
+        .env-side-l {
+            left: 0;
+            border-bottom: calc(clamp(190px, 54vw, 245px) * 0.76) solid transparent;
+            border-left: calc(clamp(280px, 80vw, 360px) / 2) solid #101010;
+        }
+        .env-side-r {
+            right: 0;
+            border-bottom: calc(clamp(190px, 54vw, 245px) * 0.76) solid transparent;
+            border-right: calc(clamp(280px, 80vw, 360px) / 2) solid #131313;
+        }
+
+        /* ===== WAX SEAL ===== */
+        .wax-seal {
+            position: absolute;
+            top: 46%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+
+        .envelope-wrapper.opened .wax-seal {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0.3) rotate(30deg);
+        }
+
+        .seal-outer {
+            width: clamp(60px, 17vw, 78px);
+            height: clamp(60px, 17vw, 78px);
+            border-radius: 50%;
+            background: radial-gradient(ellipse at 35% 28%,
+                var(--gold-shine) 0%, var(--gold-light) 18%,
+                var(--gold) 38%, var(--gold-dark) 62%,
+                #8a7030 85%, #6a5420 100%
+            );
+            box-shadow:
+                0 5px 15px rgba(0,0,0,0.6),
+                inset 0 2px 5px rgba(255,255,255,0.3),
+                inset 0 -3px 6px rgba(0,0,0,0.25);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            animation: seal-glow 3s ease-in-out infinite;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        @keyframes seal-glow {
+            0%, 100% { box-shadow: 0 5px 15px rgba(0,0,0,0.6), 0 0 15px rgba(201,168,76,0.0), inset 0 2px 5px rgba(255,255,255,0.3), inset 0 -3px 6px rgba(0,0,0,0.25); }
+            50% { box-shadow: 0 5px 15px rgba(0,0,0,0.6), 0 0 30px rgba(201,168,76,0.35), inset 0 2px 5px rgba(255,255,255,0.3), inset 0 -3px 6px rgba(0,0,0,0.25); }
+        }
+
+        /* Wavy bumps around seal */
+        .seal-bumps {
+            position: absolute;
+            inset: -6px;
+            border-radius: 50%;
+            z-index: -1;
+        }
+        .seal-bumps::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background:
+                radial-gradient(circle at 50% 0%, var(--gold-dark) 4px, transparent 5px),
+                radial-gradient(circle at 85% 15%, var(--gold-dark) 4px, transparent 5px),
+                radial-gradient(circle at 100% 50%, var(--gold-dark) 4px, transparent 5px),
+                radial-gradient(circle at 85% 85%, var(--gold-dark) 4px, transparent 5px),
+                radial-gradient(circle at 50% 100%, var(--gold-dark) 4px, transparent 5px),
+                radial-gradient(circle at 15% 85%, var(--gold-dark) 4px, transparent 5px),
+                radial-gradient(circle at 0% 50%, var(--gold-dark) 4px, transparent 5px),
+                radial-gradient(circle at 15% 15%, var(--gold-dark) 4px, transparent 5px);
+        }
+
+        .seal-inner {
+            width: 62%;
+            height: 62%;
+            border-radius: 50%;
+            border: 1.5px solid rgba(255,255,255,0.22);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .seal-text {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: clamp(6.5px, 1.8vw, 8px);
+            letter-spacing: 1.5px;
+            color: #3d2e10;
+            text-align: center;
+            line-height: 1.35;
+            text-shadow: 0 1px 1px rgba(255,255,255,0.12);
+        }
+
+        /* Instruction */
+        .open-hint {
+            position: absolute;
+            bottom: calc(-18% - 30px);
+            width: 100%;
+            text-align: center;
+            font-family: 'Montserrat', sans-serif;
+            font-size: clamp(9px, 2.5vw, 11px);
+            font-weight: 400;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--gold);
+            opacity: 0;
+            animation: hint-appear 1s ease 2s forwards;
+        }
+
+        .open-hint .arrow {
+            display: block;
+            margin-top: 8px;
+            font-size: 18px;
+            animation: bounce-arrow 1.5s ease-in-out infinite;
+        }
+
+        @keyframes hint-appear {
+            to { opacity: 0.6; }
+        }
+
+        @keyframes bounce-arrow {
+            0%, 100% { transform: translateY(0); opacity: 0.6; }
+            50% { transform: translateY(6px); opacity: 1; }
+        }
+
+        .envelope-wrapper.opened ~ .open-hint,
+        .envelope-wrapper.opened .open-hint {
+            opacity: 0 !important;
+            transition: opacity 0.3s ease;
+        }
+
+        /* =========================================
+           SCENE 2: CARD VIEW
+           ========================================= */
+        .scene-card {
+            display: none;
+            width: 100%;
+            min-height: 100vh;
+            min-height: 100dvh;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 0;
+            z-index: 50;
+            opacity: 0;
+            background: radial-gradient(ellipse at 50% 20%, #151515 0%, #050505 60%, #000 100%);
+            transition: opacity 0.8s ease;
+        }
+
+        .scene-card.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        /* Scrollable card container */
+        .card-scroll-area {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 30px 15px 50px;
+            min-height: 100vh;
+            min-height: 100dvh;
+        }
+
+        /* ===== THE CARD ===== */
+        .card {
+            width: 100%;
+            max-width: 420px;
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow:
+                0 30px 80px rgba(0,0,0,0.7),
+                0 0 2px rgba(201,168,76,0.25);
+            position: relative;
+            opacity: 0;
+            transform: translateY(60px) scale(0.92);
+            transition: transform 1s cubic-bezier(0.22, 1, 0.36, 1) 0.3s,
+                        opacity 0.8s ease 0.3s;
+        }
+
+        .card.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .card-inner {
+            background: linear-gradient(175deg, #111 0%, #0c0c0c 50%, #090909 100%);
+            padding: 0;
+            position: relative;
+        }
+
+        /* Gold inner border */
+        .card-border-frame {
+            position: absolute;
+            top: 10px; left: 10px; right: 10px; bottom: 10px;
+            border: 1px solid rgba(201,168,76,0.2);
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        /* Animated corner ornaments */
+        .corner {
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            z-index: 3;
+            opacity: 0;
+        }
+        .corner::before, .corner::after {
+            content: '';
+            position: absolute;
+            background: var(--gold);
+            transition: width 0.6s ease, height 0.6s ease;
+        }
+        .card.visible .corner { opacity: 1; transition: opacity 0.5s ease 1s; }
+
+        .c-tl { top: 16px; left: 16px; }
+        .c-tl::before { top: 0; left: 0; width: 24px; height: 1.5px; }
+        .c-tl::after  { top: 0; left: 0; width: 1.5px; height: 24px; }
+
+        .c-tr { top: 16px; right: 16px; }
+        .c-tr::before { top: 0; right: 0; width: 24px; height: 1.5px; }
+        .c-tr::after  { top: 0; right: 0; width: 1.5px; height: 24px; }
+
+        .c-bl { bottom: 16px; left: 16px; }
+        .c-bl::before { bottom: 0; left: 0; width: 24px; height: 1.5px; }
+        .c-bl::after  { bottom: 0; left: 0; width: 1.5px; height: 24px; }
+
+        .c-br { bottom: 16px; right: 16px; }
+        .c-br::before { bottom: 0; right: 0; width: 24px; height: 1.5px; }
+        .c-br::after  { bottom: 0; right: 0; width: 1.5px; height: 24px; }
+
+        /* Red accent line top/bottom */
+        .accent-bar {
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, transparent 5%, var(--red) 30%, var(--red-light) 50%, var(--red) 70%, transparent 95%);
+        }
+
+        /* Trophy / Emblem Animation */
+        .emblem-area {
+            padding: 35px 20px 10px;
+            text-align: center;
+            position: relative;
+        }
+
+        .trophy-icon {
+            font-size: clamp(44px, 12vw, 56px);
+            display: inline-block;
+            filter: drop-shadow(0 0 15px rgba(201,168,76,0.3));
+            opacity: 0;
+            transform: scale(0.4) rotate(-15deg);
+            transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.7s;
+        }
+        .card.visible .trophy-icon {
+            opacity: 1;
+            transform: scale(1) rotate(0deg);
+        }
+
+        /* Rotating ring behind trophy */
+        .ring-spin {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: clamp(80px, 22vw, 100px);
+            height: clamp(80px, 22vw, 100px);
+            border: 1px solid rgba(201,168,76,0.12);
+            border-top-color: rgba(201,168,76,0.4);
+            border-radius: 50%;
+            animation: ring-rotate 8s linear infinite;
+            pointer-events: none;
+        }
+
+        .ring-spin-2 {
+            position: absolute;
+            top: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: clamp(70px, 19vw, 90px);
+            height: clamp(70px, 19vw, 90px);
+            border: 1px dashed rgba(201,168,76,0.08);
+            border-radius: 50%;
+            animation: ring-rotate 12s linear infinite reverse;
+            pointer-events: none;
+        }
+
+        @keyframes ring-rotate {
+            to { transform: translateX(-50%) rotate(360deg); }
+        }
+
+        /* ===== HEADER ===== */
+        .card-header {
+            padding: 10px 25px 18px;
+            text-align: center;
+        }
+
+        .card-header .tag {
+            font-family: 'Montserrat', sans-serif;
+            font-size: clamp(7px, 2vw, 9px);
+            font-weight: 500;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: var(--gold);
+            opacity: 0;
+            transform: translateY(15px);
+            transition: all 0.6s ease 0.9s;
+        }
+        .card.visible .card-header .tag { opacity: 0.6; transform: translateY(0); }
+
+        .card-header .title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(34px, 10vw, 48px);
+            font-weight: 800;
+            color: var(--gold);
+            letter-spacing: 5px;
+            line-height: 1.1;
+            margin-top: 10px;
+            text-shadow: 0 2px 20px rgba(201,168,76,0.25);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.7s ease 1s;
+        }
+        .card.visible .card-header .title { opacity: 1; transform: translateY(0); }
+
+        .card-header .subtitle {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(18px, 5vw, 24px);
+            font-weight: 400;
+            font-style: italic;
+            color: var(--gold-light);
+            letter-spacing: 8px;
+            opacity: 0;
+            transform: translateY(15px);
+            transition: all 0.6s ease 1.1s;
+        }
+        .card.visible .card-header .subtitle { opacity: 0.75; transform: translateY(0); }
+
+        .card-header .year-badge {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 4px 18px;
+            border: 1px solid rgba(201,168,76,0.25);
+            font-family: 'Montserrat', sans-serif;
+            font-size: clamp(10px, 3vw, 13px);
+            font-weight: 300;
+            letter-spacing: 8px;
+            color: var(--gold);
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.5s ease 1.25s;
+        }
+        .card.visible .card-header .year-badge { opacity: 0.5; transform: scale(1); }
+
+        /* Dividers */
+        .div-gold {
+            width: 65%;
+            height: 1px;
+            margin: 0 auto;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            opacity: 0.35;
+        }
+
+        .div-red {
+            width: 40px;
+            height: 2.5px;
+            margin: 0 auto;
+            background: var(--red);
+            border-radius: 2px;
+        }
+
+        /* ===== BODY ===== */
+        .card-body {
+            padding: 22px clamp(22px, 6vw, 35px);
+            text-align: center;
+        }
+
+        /* Staggered reveal for paragraphs */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        .reveal.shown {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .card-body .msg {
+            font-size: clamp(14px, 4vw, 16.5px);
+            font-weight: 400;
+            line-height: 1.7;
+            color: var(--text-light);
+            opacity: 0.85;
+            margin-bottom: 14px;
+        }
+
+        .card-body .msg em {
+            color: var(--gold-light);
+            font-style: italic;
+        }
+
+        /* ===== INFO BOX ===== */
+        .info-box {
+            margin: 8px 0 16px;
+            padding: clamp(14px, 4vw, 20px);
+            background: rgba(139,26,26,0.08);
+            border-left: 2.5px solid var(--red);
+            border-right: 2.5px solid var(--red);
+            border-radius: 3px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Subtle shimmer on info box */
+        .info-box::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 50%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(201,168,76,0.04), transparent);
+            animation: shimmer 4s ease-in-out infinite 2s;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 200%; }
+        }
+
+        .info-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin: 8px 0;
+        }
+
+        .info-row .icon {
+            font-size: clamp(14px, 4vw, 17px);
+            width: 24px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .info-row .text {
+            font-family: 'Montserrat', sans-serif;
+            font-size: clamp(10.5px, 3vw, 12.5px);
+            font-weight: 500;
+            color: var(--text-light);
+            letter-spacing: 0.5px;
+        }
+
+        .info-row .text strong {
+            color: var(--gold-light);
+            font-weight: 600;
+        }
+
+        .info-row .text .note {
+            font-size: 0.8em;
+            font-style: italic;
+            opacity: 0.6;
+        }
+
+        /* Dress Code box */
+        .dress-box {
+            margin-top: 16px;
+            padding: 10px 16px;
+            border: 1px solid rgba(201,168,76,0.12);
+            background: rgba(201,168,76,0.03);
+            border-radius: 3px;
+            text-align: center;
+        }
+
+        .dress-box .label {
+            font-family: 'Montserrat', sans-serif;
+            font-size: clamp(8px, 2.2vw, 10px);
+            font-weight: 700;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--gold);
+        }
+
+        .dress-box .value {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(13px, 3.5vw, 15px);
+            color: var(--text-light);
+            opacity: 0.7;
+            margin-top: 3px;
+        }
+
+        /* ===== CTA SECTION ===== */
+        .cta-area {
+            padding: 15px clamp(20px, 6vw, 35px) 10px;
+            text-align: center;
+        }
+
+        .cta-area .cta-msg {
+            font-size: clamp(12px, 3.5vw, 14px);
+            color: var(--text-light);
+            opacity: 0.55;
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+
+        .rsvp-btn {
+            display: inline-block;
+            padding: clamp(11px, 3vw, 14px) clamp(28px, 8vw, 42px);
+            border: 1.5px solid var(--gold);
+            background: linear-gradient(135deg, rgba(201,168,76,0.12), rgba(201,168,76,0.03));
+            color: var(--gold);
+            font-family: 'Montserrat', sans-serif;
+            font-size: clamp(9px, 2.5vw, 11px);
+            font-weight: 600;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            text-decoration: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.35s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .rsvp-btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(201,168,76,0.18), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .rsvp-btn:hover, .rsvp-btn:active {
+            background: linear-gradient(135deg, rgba(201,168,76,0.25), rgba(201,168,76,0.08));
+            box-shadow: 0 0 25px rgba(201,168,76,0.2);
+            transform: translateY(-2px);
+        }
+
+        .rsvp-btn:hover::before {
+            left: 100%;
+        }
+
+        /* Pulse ring animation around button */
+        .btn-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        .btn-wrapper::after {
+            content: '';
+            position: absolute;
+            inset: -6px;
+            border: 1px solid var(--gold);
+            opacity: 0;
+            border-radius: 2px;
+            animation: btn-pulse-ring 2.5s ease-in-out infinite 3s;
+        }
+
+        @keyframes btn-pulse-ring {
+            0% { opacity: 0; transform: scale(1); }
+            50% { opacity: 0.3; transform: scale(1.06); }
+            100% { opacity: 0; transform: scale(1.12); }
+        }
+
+        /* Congrats footer */
+        .card-footer {
+            padding: 10px 20px 25px;
+            text-align: center;
+        }
+
+        .congrats {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(15px, 4.5vw, 19px);
+            font-style: italic;
+            color: var(--gold);
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.7s ease;
+        }
+
+        .congrats.shown {
+            opacity: 0.8;
+            transform: translateY(0);
+        }
+
+        /* Star decorations */
+        .stars-row {
+            margin: 8px 0;
+            text-align: center;
+            font-size: 10px;
+            letter-spacing: 8px;
+            color: var(--gold);
+            opacity: 0.3;
+        }
+
+        /* ===== SPARKLE BURST ===== */
+        .sparkles-layer {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 200;
+        }
+
+        .spark {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0;
+        }
+
+        @keyframes spark-fly {
+            0% { opacity: 1; transform: translate(0,0) scale(1); }
+            100% { opacity: 0; transform: translate(var(--sx), var(--sy)) scale(0); }
+        }
+
+        /* ===== CONFETTI RAIN ===== */
+        .confetti-piece {
+            position: fixed;
+            width: 8px;
+            height: 14px;
+            top: -20px;
+            opacity: 0.9;
+            z-index: 150;
+            pointer-events: none;
+            animation: confetti-fall linear forwards;
+        }
+
+        @keyframes confetti-fall {
+            0% { transform: translateY(0) rotateZ(0deg) rotateX(0deg); opacity: 0.9; }
+            25% { opacity: 1; }
+            100% { transform: translateY(110vh) rotateZ(var(--rz)) rotateX(var(--rx)); opacity: 0; }
+        }
+
+        /* ===== CONFIRM OVERLAY ===== */
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 500;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+            padding: 20px;
+        }
+
+        .overlay.show { opacity: 1; pointer-events: auto; }
+
+        .overlay-box {
+            background: linear-gradient(170deg, #131313 0%, #0a0a0a 100%);
+            border: 1px solid var(--gold);
+            padding: clamp(28px, 8vw, 45px);
+            border-radius: 6px;
+            text-align: center;
+            max-width: 360px;
+            width: 100%;
+            transform: scale(0.7) translateY(30px);
+            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 0 60px rgba(201,168,76,0.1);
+        }
+
+        .overlay.show .overlay-box {
+            transform: scale(1) translateY(0);
+        }
+
+        .overlay-box .big-icon {
+            font-size: 50px;
+            display: block;
+            margin-bottom: 12px;
+            animation: trophy-bounce 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s both;
+        }
+
+        @keyframes trophy-bounce {
+            0% { transform: scale(0) rotate(-20deg); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+
+        .overlay-box h2 {
+            font-family: 'Playfair Display', serif;
+            color: var(--gold);
+            font-size: clamp(20px, 5vw, 26px);
+            margin-bottom: 10px;
+        }
+
+        .overlay-box p {
+            font-family: 'Cormorant Garamond', serif;
+            color: var(--text-light);
+            font-size: clamp(14px, 4vw, 17px);
+            opacity: 0.75;
+            line-height: 1.6;
+        }
+
+        .close-btn {
+            margin-top: 22px;
+            padding: 10px 28px;
+            border: 1px solid var(--gold);
+            background: transparent;
+            color: var(--gold);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .close-btn:hover, .close-btn:active {
+            background: rgba(201,168,76,0.12);
+        }
+
+        /* ===== LANDSCAPE HELPER ===== */
+        @media (orientation: landscape) and (max-height: 500px) {
+            .scene-envelope {
+                padding: 10px;
+            }
+            .envelope-wrapper {
+                width: 260px;
+                height: 175px;
+            }
+            .envelope-pocket {
+                border-left-width: 130px !important;
+                border-right-width: 130px !important;
+                border-bottom-width: 82px !important;
+            }
+            .envelope-flap {
+                border-left-width: 130px !important;
+                border-right-width: 130px !important;
+                border-top-width: 105px !important;
+            }
+            .env-side-l {
+                border-bottom-width: 133px !important;
+                border-left-width: 130px !important;
+            }
+            .env-side-r {
+                border-bottom-width: 133px !important;
+                border-right-width: 130px !important;
+            }
+            .intro-title { top: 4%; }
+            .intro-title h1 { font-size: 24px; }
+            .card-scroll-area { padding: 15px 10px 30px; }
+        }
+
+        /* Tablets */
+        @media (min-width: 768px) {
+            .card { max-width: 480px; }
+            .card-scroll-area { padding: 50px 20px 60px; }
+        }
+
+        /* Large desktop */
+        @media (min-width: 1200px) {
+            .card { max-width: 500px; }
+            .ambient-light { width: 450px; height: 450px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- =================== SCENE 1: ENVELOPE =================== -->
+    <div class="scene-envelope" id="sceneEnvelope">
+        <div class="ambient-light"></div>
+        <div class="particles" id="particles"></div>
+
+        <div class="intro-title" id="introTitle">
+            <span>Invitación exclusiva</span>
+            <h1>PREAS AWARDS</h1>
+        </div>
+
+        <div class="envelope-wrapper" id="envelope" onclick="openEnvelope()">
+            <div class="envelope-flap"></div>
+            <div class="env-side-l"></div>
+            <div class="env-side-r"></div>
+            <div class="envelope-body">
+                <div class="envelope-lining"></div>
+            </div>
+            <div class="envelope-pocket"></div>
+
+            <div class="wax-seal">
+                <div class="seal-outer">
+                    <div class="seal-bumps"></div>
+                    <div class="seal-inner">
+                        <span class="seal-text">PREAS<br>AWARDS</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="open-hint">
+                Toca para abrir
+                <span class="arrow">▼</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sparkle layer -->
+    <div class="sparkles-layer" id="sparkles"></div>
+
+    <!-- =================== SCENE 2: CARD =================== -->
+    <div class="scene-card" id="sceneCard">
+        <div class="card-scroll-area">
+            <div class="card" id="card">
+                <div class="card-inner">
+                    <div class="accent-bar"></div>
+                    <div class="card-border-frame"></div>
+
+                    <div class="corner c-tl"></div>
+                    <div class="corner c-tr"></div>
+                    <div class="corner c-bl"></div>
+                    <div class="corner c-br"></div>
+
+                    <!-- Trophy emblem -->
+                    <div class="emblem-area">
+                        <div class="ring-spin"></div>
+                        <div class="ring-spin-2"></div>
+                        <div class="trophy-icon">🏆</div>
+                    </div>
+
+                    <!-- Header -->
+                    <div class="card-header">
+                        <div class="tag">Invitación exclusiva</div>
+                        <div class="title">PREAS</div>
+                        <div class="subtitle">Awards</div>
+                        <div class="year-badge">2 0 2 6</div>
+                    </div>
+
+                    <div class="div-gold"></div>
+
+                    <!-- Body -->
+                    <div class="card-body">
+                        <p class="msg reveal">
+                            Es un verdadero honor comunicarte que has sido
+                            <em>nominado/a</em> para la edición 2026 de los
+                            <em>PREAS AWARDS</em>.
+                        </p>
+                        <p class="msg reveal">
+                            Tu presencia es fundamental para celebrar juntos
+                            este reconocimiento en una noche inolvidable.
+                        </p>
+                        <p class="msg reveal">
+                            Te esperamos para compartir la gala de premiación.
+                        </p>
+
+                        <div class="stars-row reveal">★ ★ ★</div>
+                        <div class="div-red"></div>
+
+                        <div class="info-box reveal">
+                            <div class="info-row">
+                                <span class="icon">📅</span>
+                                <span class="text"><strong>Sábado 26 de Diciembre</strong></span>
+                            </div>
+                            <div class="info-row">
+                                <span class="icon">🕐</span>
+                                <span class="text"><strong>17:00 hs</strong> <span class="note">(se ruega puntualidad)</span></span>
+                            </div>
+                            <div class="info-row">
+                                <span class="icon">📍</span>
+                                <span class="text"><strong>Av. Perón 4258</strong> — José C. Paz</span>
+                            </div>
+                        </div>
+
+                        <div class="dress-box reveal">
+                            <div class="label">Dress Code</div>
+                            <div class="value">Elegante / de entrega de premios</div>
+                        </div>
+                    </div>
+
+                    <div class="div-gold" style="margin-top: 10px;"></div>
+
+                    <!-- CTA -->
+                    <div class="cta-area reveal">
+                        <p class="cta-msg">Por favor, confirmanos tu asistencia<br>para reservar tu lugar en la ceremonia.</p>
+                        <div class="btn-wrapper">
+                            <a class="rsvp-btn" href="javascript:void(0)" onclick="confirmRSVP()">Confirmar Asistencia</a>
+                        </div>
+                    </div>
+
+                    <div class="card-footer">
+                        <div class="stars-row">✦ ✦ ✦</div>
+                        <p class="congrats" id="congrats">¡Felicitaciones por la nominación!</p>
+                    </div>
+
+                    <div class="accent-bar"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirm Overlay -->
+    <div class="overlay" id="confirmOverlay">
+        <div class="overlay-box">
+            <span class="big-icon">🏆</span>
+            <h2>¡Asistencia Confirmada!</h2>
+            <p>Gracias por confirmar. Te esperamos en la gala de los <em style="color:var(--gold-light)">PREAS AWARDS 2026</em>.</p>
+            <button class="close-btn" onclick="closeOverlay()">Cerrar</button>
+        </div>
+    </div>
+
+    <script>
+    (function () {
+        /* ===== PARTICLES ===== */
+        const pCont = document.getElementById('particles');
+        for (let i = 0; i < 35; i++) {
+            const p = document.createElement('div');
+            p.className = 'particle';
+            p.style.left = Math.random() * 100 + '%';
+            const size = 1.5 + Math.random() * 3;
+            p.style.width = size + 'px';
+            p.style.height = size + 'px';
+            p.style.animationDuration = (10 + Math.random() * 18) + 's';
+            p.style.animationDelay = (Math.random() * 20) + 's';
+            pCont.appendChild(p);
+        }
+
+        /* ===== OPEN ENVELOPE ===== */
+        let opened = false;
+
+        window.openEnvelope = function () {
+            if (opened) return;
+            opened = true;
+
+            const envelope = document.getElementById('envelope');
+            const sceneEnv = document.getElementById('sceneEnvelope');
+            const sceneCardEl = document.getElementById('sceneCard');
+            const card = document.getElementById('card');
+            const introTitle = document.getElementById('introTitle');
+
+            // 1. Flap opens
+            envelope.classList.add('opened');
+            burstSparks(window.innerWidth / 2, window.innerHeight / 2, 50);
+
+            // 2. Fade out intro title
+            introTitle.style.transition = 'opacity 0.5s ease';
+            introTitle.style.opacity = '0';
+
+            // 3. After envelope slides down, switch scenes
+            setTimeout(function () {
+                sceneEnv.classList.add('dismissed');
+                sceneCardEl.classList.add('active');
+                document.body.classList.add('scrollable');
+
+                // 4. Card appears
+                setTimeout(function () {
+                    card.classList.add('visible');
+                    launchConfetti();
+
+                    // 5. Staggered reveal for card content
+                    staggerReveal();
+                }, 400);
+            }, 900);
+        };
+
+        /* ===== STAGGERED CONTENT REVEAL ===== */
+        function staggerReveal() {
+            const els = document.querySelectorAll('.reveal');
+            els.forEach(function (el, i) {
+                setTimeout(function () {
+                    el.classList.add('shown');
+                }, 1400 + i * 250);
+            });
+
+            // Congrats last
+            setTimeout(function () {
+                document.getElementById('congrats').classList.add('shown');
+            }, 1400 + els.length * 250 + 300);
+        }
+
+        /* ===== SPARK BURST ===== */
+        function burstSparks(cx, cy, count) {
+            const container = document.getElementById('sparkles');
+            for (let i = 0; i < count; i++) {
+                const s = document.createElement('div');
+                s.className = 'spark';
+                const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.3;
+                const dist = 60 + Math.random() * 180;
+                const sx = Math.cos(angle) * dist;
+                const sy = Math.sin(angle) * dist;
+                const size = 2 + Math.random() * 5;
+                s.style.left = cx + 'px';
+                s.style.top = cy + 'px';
+                s.style.width = size + 'px';
+                s.style.height = size + 'px';
+                s.style.setProperty('--sx', sx + 'px');
+                s.style.setProperty('--sy', sy + 'px');
+                s.style.background = ['#c9a84c','#e0c872','#f5e6a3','#a52222','#c0392b'][Math.floor(Math.random()*5)];
+                s.style.animation = 'spark-fly ' + (0.5 + Math.random() * 0.6) + 's ease-out forwards';
+                s.style.animationDelay = (Math.random() * 0.15) + 's';
+                container.appendChild(s);
+            }
+            setTimeout(function () { container.innerHTML = ''; }, 1200);
+        }
+
+        /* ===== CONFETTI RAIN ===== */
+        function launchConfetti() {
+            const colors = ['#c9a84c','#e0c872','#8b1a1a','#a52222','#f5e6a3','#c0392b','#ffffff'];
+            for (let i = 0; i < 60; i++) {
+                setTimeout(function () {
+                    const c = document.createElement('div');
+                    c.className = 'confetti-piece';
+                    c.style.left = Math.random() * 100 + 'vw';
+                    c.style.width = (5 + Math.random() * 7) + 'px';
+                    c.style.height = (8 + Math.random() * 10) + 'px';
+                    c.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    c.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+                    c.style.setProperty('--rz', (Math.random() * 720 - 360) + 'deg');
+                    c.style.setProperty('--rx', (Math.random() * 720) + 'deg');
+                    c.style.animationDuration = (2 + Math.random() * 2.5) + 's';
+                    c.style.animationDelay = '0s';
+                    document.body.appendChild(c);
+                    setTimeout(function () { c.remove(); }, 5000);
+                }, i * 50);
+            }
+        }
+
+        /* ===== RSVP ===== */
+        window.confirmRSVP = function () {
+            document.getElementById('confirmOverlay').classList.add('show');
+            burstSparks(window.innerWidth / 2, window.innerHeight / 2, 40);
+            launchConfetti();
+        };
+
+        window.closeOverlay = function () {
+            document.getElementById('confirmOverlay').classList.remove('show');
+        };
+
+        /* ===== SCROLL-BASED PARALLAX ON CARD VIEW ===== */
+        window.addEventListener('scroll', function () {
+            const rings = document.querySelectorAll('.ring-spin, .ring-spin-2');
+            const scrollY = window.scrollY || window.pageYOffset;
+            rings.forEach(function (r) {
+                r.style.transform = 'translateX(-50%) rotate(' + (scrollY * 0.3) + 'deg)';
+            });
+        });
+
+    })();
+    </script>
+
+</body>
+</html>
