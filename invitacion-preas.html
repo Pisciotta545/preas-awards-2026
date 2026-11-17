@@ -217,7 +217,7 @@
             align-items: center;
             justify-content: center;
             z-index: 2;
-            transition: transform 1s cubic-bezier(0.2, 0.9, 0.3, 1), box-shadow 1s ease;
+            transition: transform 0.85s cubic-bezier(0.2, 0.9, 0.3, 1), box-shadow 0.85s ease;
             transform: translateY(0);
         }
 
@@ -250,7 +250,7 @@
             height: 60%;
             transform-origin: top center;
             transform-style: preserve-3d;
-            transition: transform 0.9s cubic-bezier(0.35, 0, 0.2, 1);
+            transition: transform 0.65s cubic-bezier(0.35, 0, 0.2, 1);
             z-index: 6;
             filter: drop-shadow(0 5px 8px rgba(45, 5, 10, 0.4));
         }
@@ -258,10 +258,11 @@
         .envelope-root.open .env-flap-container {
             transform: rotateX(180deg);
             z-index: 1;
+            transition: transform 0.65s cubic-bezier(0.35, 0, 0.2, 1), z-index 0s linear 0.32s;
             filter: drop-shadow(0 -4px 6px rgba(45, 5, 10, 0.3));
         }
 
-        .envelope-root.open .env-card-peek {
+        .envelope-root.card-raised .env-card-peek {
             transform: translateY(-68%);
             box-shadow: 0 20px 45px rgba(0,0,0,0.7), 0 0 20px rgba(201,168,76,0.3);
         }
@@ -1372,10 +1373,15 @@
             // 1. Burst golden sparks from wax seal
             spawnSparksBurst(clickX, clickY, 35);
 
-            // 2. Open flap & slide out card
+            // 2. PASO 1: Abrir primero la solapa del sobre
             envelope.classList.add('open');
 
-            // 3. Smooth zoom transition into the card
+            // 3. PASO 2: ÚNICAMENTE después de que la solapa se abrió, sube la tarjeta
+            setTimeout(() => {
+                envelope.classList.add('card-raised');
+            }, 650);
+
+            // 4. PASO 3: Transición cinematográfica hacia la tarjeta completa
             setTimeout(() => {
                 sceneEnvelope.classList.add('zooming');
 
@@ -1386,12 +1392,12 @@
                     document.body.classList.add('scroll-unlocked');
                     window.scrollTo({ top: 0, behavior: 'smooth' });
 
-                    // 4. Launch celebration confetti
+                    // 5. Lanzar confeti de gala
                     launchConfettiRain(50);
                     startGoldParticles();
                 }, 450);
 
-            }, 1050);
+            }, 1650);
         }
 
         /* ===== RESET & VIEW ENVELOPE AGAIN ===== */
@@ -1407,6 +1413,7 @@
                 sceneEnvelope.style.display = 'flex';
                 void sceneEnvelope.offsetWidth; // Force layout reflow
 
+                envelope.classList.remove('card-raised');
                 envelope.classList.remove('open');
                 isOpening = false;
             }, 300);
