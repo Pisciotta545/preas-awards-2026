@@ -109,37 +109,27 @@
             pointer-events: none;
         }
 
-        /* Outer white card / passpartout matting */
+        /* Outer container (passpartout removed) */
         .mat-card-container {
             position: relative;
             width: clamp(320px, 92vw, 470px);
             aspect-ratio: 1.45 / 1;
-            background-color: var(--mat-white);
+            background: transparent;
             border-radius: 2px;
             display: flex;
             justify-content: center;
             align-items: center;
-            box-shadow: 
-                0 22px 55px rgba(60, 45, 40, 0.18),
-                0 5px 16px rgba(60, 45, 40, 0.08),
-                0 0 1px rgba(0, 0, 0, 0.18);
-            background-image: 
-                linear-gradient(to bottom, rgba(255,255,255,0.85), rgba(250,248,245,0.92)),
-                repeating-linear-gradient(0deg, rgba(0,0,0,0.008) 0px, rgba(0,0,0,0.008) 1px, transparent 1px, transparent 3px);
             perspective: 1200px;
             transform-style: preserve-3d;
-            animation: mat-float 5s ease-in-out infinite;
             will-change: transform;
         }
 
         @keyframes mat-float {
             0%, 100% {
                 transform: translateY(0px) rotateX(0deg) rotateY(0deg);
-                box-shadow: 0 22px 55px rgba(60, 45, 40, 0.18), 0 5px 16px rgba(60, 45, 40, 0.08);
             }
             50% {
                 transform: translateY(-8px) rotateX(1deg) rotateY(-0.5deg);
-                box-shadow: 0 32px 70px rgba(60, 45, 40, 0.22), 0 8px 22px rgba(60, 45, 40, 0.12);
             }
         }
 
@@ -163,13 +153,14 @@
         /* ===== THE BURGUNDY ENVELOPE ===== */
         .envelope-root {
             position: relative;
-            width: 82%;
-            height: 70%;
+            width: 100%;
+            height: 100%;
             cursor: pointer;
             perspective: 1400px;
             transform-style: preserve-3d;
             transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.3, 1);
             z-index: 2;
+            animation: mat-float 5s ease-in-out infinite;
         }
 
         @media (hover: hover) {
@@ -187,6 +178,7 @@
             inset: 0;
             background: linear-gradient(145deg, var(--envelope-burgundy-light) 0%, var(--envelope-burgundy) 55%, var(--envelope-burgundy-dark) 100%);
             border-radius: 2px;
+            border: 1.5px solid rgba(0, 0, 0, 0.6);
             box-shadow: 
                 0 14px 32px rgba(70, 10, 20, 0.38),
                 0 4px 10px rgba(70, 10, 20, 0.22),
@@ -609,6 +601,8 @@
             width: 48px;
             height: 48px;
             display: block;
+            border-radius: 50%;
+            overflow: hidden;
             filter: drop-shadow(0 4px 12px rgba(0,0,0,0.6));
             animation: badge-bob 3s ease-in-out infinite;
         }
@@ -1315,11 +1309,9 @@
                 <div class="trophy-badge-wrapper">
                     <div class="badge-halo-spin"></div>
                     <div class="seal-mini-badge">
-                        <svg viewBox="0 0 100 100">
-                            <circle cx="50" cy="50" r="46" fill="url(#goldBulgeGrad)" />
-                            <circle cx="50" cy="50" r="36" fill="url(#goldCenterGrad)" stroke="#55390c" stroke-width="1.5" />
-                            <text x="50" y="56" text-anchor="middle" font-family="'Cinzel', serif" font-weight="900" font-size="20" fill="#3b2606">P</text>
-                        </svg>
+                        <video autoplay muted loop playsinline style="width:100%;height:100%;border-radius:50%;object-fit:cover;">
+                            <source src="Logo.MP4" type="video/mp4">
+                        </video>
                     </div>
                 </div>
 
