@@ -936,6 +936,94 @@
             z-index: 10;
         }
 
+        /* Address link to Google Maps */
+        .map-link {
+            color: inherit;
+            text-decoration: none;
+            border-bottom: 1px dotted rgba(201,168,76,0.5);
+        }
+
+        .map-link:hover {
+            border-bottom-color: var(--gold-shine);
+        }
+
+        /* Add to calendar button */
+        .calendar-btn-wrapper {
+            text-align: center;
+            margin: -6px 0 18px;
+        }
+
+        .calendar-add-btn {
+            background: transparent;
+            border: 1px solid rgba(201,168,76,0.3);
+            color: var(--gold);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 9.5px;
+            font-weight: 600;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            padding: 8px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .calendar-add-btn:hover {
+            background: rgba(201,168,76,0.12);
+            border-color: var(--gold-shine);
+            color: var(--gold-shine);
+            transform: translateY(-1px);
+        }
+
+        /* Floating music on/off button */
+        .music-toggle {
+            position: fixed;
+            top: 16px;
+            right: 16px;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            border: 1px solid rgba(201,168,76,0.45);
+            background: rgba(15, 2, 5, 0.75);
+            color: var(--gold-shine);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.6);
+            z-index: 160;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease, transform 0.2s ease;
+        }
+
+        .music-toggle.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .music-toggle:hover {
+            transform: scale(1.06);
+        }
+
+        .music-toggle svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        .music-toggle .icon-off {
+            display: none;
+        }
+
+        .music-toggle.muted .icon-on {
+            display: none;
+        }
+
+        .music-toggle.muted .icon-off {
+            display: block;
+        }
+
         .replay-envelope-btn:hover {
             background: rgba(201,168,76,0.12);
             border-color: var(--gold-shine);
@@ -1359,8 +1447,13 @@
 
                     <div class="detail-item">
                         <span class="d-icon">📍</span>
-                        <span><strong>Av. Perón 4258</strong> — José C. Paz</span>
+                        <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=Av.+Per%C3%B3n+4258%2C+Jos%C3%A9+C.+Paz%2C+Buenos+Aires" target="_blank" rel="noopener"><strong>Av. Perón 4258</strong> — José C. Paz <span class="sub-note">(ver mapa)</span></a>
                     </div>
+                </div>
+
+                <!-- Add to calendar -->
+                <div class="calendar-btn-wrapper">
+                    <button class="calendar-add-btn" onclick="addToCalendar()">📅 Agregar al calendario</button>
                 </div>
 
                 <!-- Dress Code -->
@@ -1410,6 +1503,13 @@
         </div>
     </div>
 
+    <!-- Background music (starts when the envelope is opened) -->
+    <audio id="bgMusic" src="musica-gala.mp3" preload="auto" loop></audio>
+    <button class="music-toggle" id="musicToggle" onclick="toggleMusic()" aria-label="Silenciar música">
+        <svg class="icon-on" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 7.97v8.05A4.5 4.5 0 0 0 16.5 12zM14 3.23v2.06a7 7 0 0 1 0 13.42v2.06A9 9 0 0 0 14 3.23z"/></svg>
+        <svg class="icon-off" viewBox="0 0 24 24"><path d="M16.5 12A4.5 4.5 0 0 0 14 7.97v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51A8.8 8.8 0 0 0 21 12a9 9 0 0 0-7-8.77v2.06A7 7 0 0 1 19 12zM4.27 3 3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06a9 9 0 0 0 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4 9.91 6.09 12 8.18V4z"/></svg>
+    </button>
+
     <script>
         let isOpening = false;
 
@@ -1440,6 +1540,14 @@
         function handleEnvelopeClick(e) {
             if (isOpening) return;
             isOpening = true;
+
+            // Start background music on the opening tap
+            const bgMusic = document.getElementById('bgMusic');
+            if (bgMusic && bgMusic.paused) {
+                bgMusic.volume = 0.6;
+                bgMusic.play().catch(() => {});
+            }
+            document.getElementById('musicToggle').classList.add('visible');
 
             const envelope = document.getElementById('envelopeRoot');
             const sceneEnvelope = document.getElementById('sceneEnvelope');
@@ -1488,6 +1596,50 @@
                 }, 450);
 
             }, 1650);
+        }
+
+        /* ===== MUSIC ON / OFF ===== */
+        function toggleMusic() {
+            const bgMusic = document.getElementById('bgMusic');
+            const btn = document.getElementById('musicToggle');
+            bgMusic.muted = !bgMusic.muted;
+            if (!bgMusic.muted && bgMusic.paused) bgMusic.play().catch(() => {});
+            btn.classList.toggle('muted', bgMusic.muted);
+            btn.setAttribute('aria-label', bgMusic.muted ? 'Activar música' : 'Silenciar música');
+        }
+
+        /* ===== ADD EVENT TO CALENDAR ===== */
+        function addToCalendar() {
+            const title = 'PREAS AWARDS 2026';
+            const location = 'Av. Perón 4258, José C. Paz, Buenos Aires';
+            const details = 'Dress Code: Elegante / de entrega de premios. Se ruega puntualidad.';
+            // Sábado 26 de Diciembre, 17:00 hs (Argentina, UTC-3)
+            const start = '20261226T200000Z';
+            const end = '20261226T230000Z';
+
+            const isApple = /iPhone|iPad|iPod|Macintosh/.test(navigator.userAgent);
+            if (isApple) {
+                const ics = [
+                    'BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//PREAS AWARDS//ES',
+                    'BEGIN:VEVENT',
+                    'UID:preas-awards-2026@pisciotta545.github.io',
+                    'DTSTAMP:' + start,
+                    'DTSTART:' + start, 'DTEND:' + end,
+                    'SUMMARY:' + title,
+                    'LOCATION:' + location.replace(/,/g, '\\,'),
+                    'DESCRIPTION:' + details,
+                    'BEGIN:VALARM', 'TRIGGER:-P1D', 'ACTION:DISPLAY', 'DESCRIPTION:' + title, 'END:VALARM',
+                    'END:VEVENT', 'END:VCALENDAR'
+                ].join('\r\n');
+                window.location.href = 'data:text/calendar;charset=utf-8,' + encodeURIComponent(ics);
+            } else {
+                const url = 'https://calendar.google.com/calendar/render?action=TEMPLATE'
+                    + '&text=' + encodeURIComponent(title)
+                    + '&dates=' + start + '/' + end
+                    + '&location=' + encodeURIComponent(location)
+                    + '&details=' + encodeURIComponent(details);
+                window.open(url, '_blank');
+            }
         }
 
         /* ===== RESET & VIEW ENVELOPE AGAIN ===== */
