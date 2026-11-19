@@ -1116,6 +1116,200 @@
         /* ========================================================
            CONFIRMATION MODAL WITH CELEBRATION
            ======================================================== */
+        /* ===== RSVP: decline link, saved status & form ===== */
+        .rsvp-container [hidden],
+        #rsvpFormModal [hidden] {
+            display: none !important;
+        }
+
+        .rsvp-decline-btn {
+            display: inline-block;
+            margin-top: 18px;
+            background: transparent;
+            border: none;
+            border-bottom: 1px dotted rgba(200,194,181,0.5);
+            padding: 2px 0;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            cursor: pointer;
+        }
+
+        .rsvp-decline-btn:hover {
+            color: var(--gold-shine);
+        }
+
+        .rsvp-status {
+            padding: 16px 14px;
+            background: rgba(201,168,76,0.06);
+            border: 1px solid rgba(201,168,76,0.3);
+            border-radius: 3px;
+        }
+
+        .rsvp-status-text {
+            font-size: 15.5px;
+            color: var(--text-light);
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+
+        .rsvp-edit-btn {
+            background: transparent;
+            border: 1px solid rgba(201,168,76,0.4);
+            color: var(--gold);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 9.5px;
+            font-weight: 600;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            padding: 9px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .rsvp-edit-btn:hover {
+            background: rgba(201,168,76,0.12);
+            border-color: var(--gold-shine);
+            color: var(--gold-shine);
+        }
+
+        .modal-box.rsvp-form-box {
+            max-height: 88vh;
+            max-height: 88dvh;
+            overflow-y: auto;
+            padding: 30px 22px 26px;
+        }
+
+        .rsvp-choice {
+            display: flex;
+            gap: 8px;
+            margin-top: 14px;
+        }
+
+        .rsvp-choice-btn {
+            flex: 1;
+            padding: 11px 6px;
+            background: transparent;
+            border: 1px solid rgba(201,168,76,0.35);
+            border-radius: 2px;
+            color: var(--text-muted);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        .rsvp-choice-btn.selected {
+            background: linear-gradient(135deg, #a02030 0%, #70101d 100%);
+            border-color: var(--gold);
+            color: #fff;
+        }
+
+        .rsvp-label {
+            display: block;
+            text-align: left;
+            margin: 18px 0 7px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 9.5px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--gold);
+        }
+
+        .rsvp-input {
+            display: block;
+            width: 100%;
+            padding: 11px 12px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(201,168,76,0.3);
+            border-radius: 2px;
+            color: var(--text-light);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.2s ease;
+        }
+
+        .rsvp-input:focus {
+            border-color: var(--gold-shine);
+        }
+
+        .rsvp-input + .rsvp-input {
+            margin-top: 8px;
+        }
+
+        .rsvp-stepper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 12px;
+        }
+
+        .rsvp-stepper button {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: transparent;
+            border: 1px solid var(--gold);
+            color: var(--gold-shine);
+            font-size: 20px;
+            line-height: 1;
+            cursor: pointer;
+        }
+
+        .rsvp-stepper button:disabled {
+            opacity: 0.3;
+            cursor: default;
+        }
+
+        .rsvp-stepper span {
+            min-width: 34px;
+            font-family: 'Cinzel', serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--gold-shine);
+        }
+
+        .rsvp-error {
+            min-height: 18px;
+            margin-top: 12px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 12.5px !important;
+            color: #ff9b9b !important;
+            opacity: 1 !important;
+        }
+
+        .rsvp-submit-btn {
+            display: block;
+            width: 100%;
+            margin-top: 8px;
+            padding: 13px;
+            background: linear-gradient(135deg, #a02030 0%, #70101d 100%);
+            border: 1.5px solid var(--gold);
+            border-radius: 2px;
+            color: #fff;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+
+        .rsvp-submit-btn:disabled {
+            opacity: 0.6;
+            cursor: wait;
+        }
+
         .modal-overlay {
             position: fixed;
             inset: 0;
@@ -1537,14 +1731,24 @@
 
                 <!-- RSVP Area -->
                 <div class="rsvp-container">
-                    <p class="rsvp-request-text">
-                        Por favor, confirmanos tu asistencia para reservar tu lugar en la ceremonia.
-                    </p>
+                    <div id="rsvpAsk">
+                        <p class="rsvp-request-text">
+                            Por favor, confirmanos tu asistencia para reservar tu lugar en la ceremonia.
+                        </p>
+                        <div class="rsvp-button-wrapper">
+                            <button class="rsvp-button-main" onclick="openRsvpForm('asiste')">
+                                <span>Confirmar Asistencia</span>
+                            </button>
+                        </div>
+                        <div>
+                            <button class="rsvp-decline-btn" onclick="openRsvpForm('no')">No puedo asistir</button>
+                        </div>
+                    </div>
 
-                    <div class="rsvp-button-wrapper">
-                        <button class="rsvp-button-main" onclick="openConfirmationModal(event)">
-                            <span>Confirmar Asistencia</span>
-                        </button>
+                    <!-- Shown when this phone already answered -->
+                    <div class="rsvp-status" id="rsvpStatus" hidden>
+                        <p class="rsvp-status-text" id="rsvpStatusText"></p>
+                        <button class="rsvp-edit-btn" onclick="openRsvpForm()">Editar mi confirmación</button>
                     </div>
                 </div>
             </div>
@@ -1573,6 +1777,42 @@
             <h3>¡Lugar Reservado!</h3>
             <p>Tu confirmación para los <strong>PREAS AWARDS 2026</strong> ha sido registrada con éxito. ¡Nos vemos en la ceremonia!</p>
             <button class="modal-close-btn" onclick="closeConfirmationModal()">Aceptar</button>
+        </div>
+    </div>
+
+    <!-- RSVP Form Modal -->
+    <div class="modal-overlay" id="rsvpFormModal">
+        <div class="modal-box rsvp-form-box">
+            <form id="rsvpForm" onsubmit="submitRsvp(event)" novalidate>
+                <h3>Confirmación</h3>
+                <div class="rsvp-choice">
+                    <button type="button" class="rsvp-choice-btn" data-status="asiste" onclick="setRsvpStatus('asiste')">Asisto</button>
+                    <button type="button" class="rsvp-choice-btn" data-status="no" onclick="setRsvpStatus('no')">No puedo asistir</button>
+                </div>
+
+                <label class="rsvp-label" for="rsvpName">Tu nombre y apellido</label>
+                <input class="rsvp-input" id="rsvpName" type="text" autocomplete="name" maxlength="120" placeholder="Nombre y apellido">
+
+                <div id="rsvpGuestsBlock">
+                    <div class="rsvp-label">¿Con cuántos acompañantes venís?</div>
+                    <div class="rsvp-stepper">
+                        <button type="button" id="rsvpGuestMinus" onclick="changeGuestCount(-1)" aria-label="Quitar acompañante">−</button>
+                        <span id="rsvpGuestCount">0</span>
+                        <button type="button" onclick="changeGuestCount(1)" aria-label="Agregar acompañante">+</button>
+                    </div>
+                    <div id="rsvpGuestFields"></div>
+                </div>
+
+                <p class="rsvp-error" id="rsvpError"></p>
+                <button type="submit" class="rsvp-submit-btn" id="rsvpSubmit">Confirmar</button>
+                <button type="button" class="modal-close-btn" onclick="closeRsvpForm()">Cancelar</button>
+            </form>
+
+            <div id="rsvpDeclineDone" hidden>
+                <h3>¡Gracias por avisarnos!</h3>
+                <p>Lamentamos que no puedas acompañarnos. Si cambiás de idea, podés editar tu respuesta desde la invitación.</p>
+                <button class="modal-close-btn" onclick="closeRsvpForm()">Aceptar</button>
+            </div>
         </div>
     </div>
 
@@ -1771,6 +2011,157 @@
                 isOpening = false;
             }, 300);
         }
+
+        /* ===== RSVP: FORM, SAVE & EDIT FROM THE SAME PHONE ===== */
+        const RSVP_API_URL = 'https://script.google.com/macros/s/AKfycbyn4fwEnNlXspB69UArYgNSZROzTWS1843zXXsZB1-lIBfaOzblR-y8-YPnA6nMBgh5/exec';
+        const RSVP_STORAGE_KEY = 'preasRsvp';
+        let rsvpStatus = 'asiste';
+        let rsvpGuests = [];
+
+        function loadSavedRsvp() {
+            try { return JSON.parse(localStorage.getItem(RSVP_STORAGE_KEY)); } catch (e) { return null; }
+        }
+
+        function saveRsvpLocal(data) {
+            try { localStorage.setItem(RSVP_STORAGE_KEY, JSON.stringify(data)); } catch (e) {}
+        }
+
+        function newRsvpId() {
+            if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
+            return 'id-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 12);
+        }
+
+        function renderRsvpStatus() {
+            const saved = loadSavedRsvp();
+            const ask = document.getElementById('rsvpAsk');
+            const box = document.getElementById('rsvpStatus');
+            if (!saved || !saved.id) {
+                ask.hidden = false;
+                box.hidden = true;
+                return;
+            }
+            const n = saved.guests.length;
+            document.getElementById('rsvpStatusText').textContent = saved.status === 'asiste'
+                ? '✅ Ya confirmaste: ' + saved.name + (n ? ' + ' + n + (n === 1 ? ' acompañante' : ' acompañantes') : '')
+                : 'Avisaste que no podés asistir (' + saved.name + ')';
+            ask.hidden = true;
+            box.hidden = false;
+        }
+
+        function openRsvpForm(status) {
+            const saved = loadSavedRsvp();
+            rsvpGuests = saved && saved.status === 'asiste' ? saved.guests.slice() : [];
+            document.getElementById('rsvpName').value = saved ? saved.name : '';
+            setRsvpStatus(status || (saved ? saved.status : 'asiste'));
+            renderGuestFields();
+            document.getElementById('rsvpError').textContent = '';
+            document.getElementById('rsvpForm').hidden = false;
+            document.getElementById('rsvpDeclineDone').hidden = true;
+            document.getElementById('rsvpSubmit').disabled = false;
+            document.getElementById('rsvpFormModal').classList.add('active');
+        }
+
+        function closeRsvpForm() {
+            document.getElementById('rsvpFormModal').classList.remove('active');
+        }
+
+        function setRsvpStatus(status) {
+            rsvpStatus = status;
+            document.querySelectorAll('.rsvp-choice-btn').forEach(btn => {
+                btn.classList.toggle('selected', btn.dataset.status === status);
+            });
+            document.getElementById('rsvpGuestsBlock').hidden = status !== 'asiste';
+            document.getElementById('rsvpSubmit').textContent = status === 'asiste' ? 'Confirmar' : 'Enviar respuesta';
+        }
+
+        function syncGuestInputs() {
+            document.querySelectorAll('#rsvpGuestFields input').forEach((input, i) => {
+                rsvpGuests[i] = input.value;
+            });
+        }
+
+        function renderGuestFields() {
+            const wrap = document.getElementById('rsvpGuestFields');
+            wrap.innerHTML = '';
+            rsvpGuests.forEach((value, i) => {
+                const input = document.createElement('input');
+                input.className = 'rsvp-input';
+                input.type = 'text';
+                input.maxLength = 120;
+                input.placeholder = 'Acompañante ' + (i + 1) + ': nombre y apellido';
+                input.value = value;
+                wrap.appendChild(input);
+            });
+            document.getElementById('rsvpGuestCount').textContent = rsvpGuests.length;
+            document.getElementById('rsvpGuestMinus').disabled = rsvpGuests.length === 0;
+        }
+
+        function changeGuestCount(delta) {
+            syncGuestInputs();
+            if (delta > 0) rsvpGuests.push('');
+            else if (rsvpGuests.length) rsvpGuests.pop();
+            renderGuestFields();
+            if (delta > 0) {
+                const inputs = document.querySelectorAll('#rsvpGuestFields input');
+                inputs[inputs.length - 1].focus();
+            }
+        }
+
+        async function submitRsvp(e) {
+            e.preventDefault();
+            syncGuestInputs();
+            const errorEl = document.getElementById('rsvpError');
+            const tidy = v => String(v || '').replace(/\s+/g, ' ').trim();
+            const fullName = v => /\S+\s+\S+/.test(v);
+
+            const name = tidy(document.getElementById('rsvpName').value);
+            if (!fullName(name)) {
+                errorEl.textContent = 'Escribí tu nombre y apellido.';
+                return;
+            }
+            const guests = rsvpStatus === 'asiste' ? rsvpGuests.map(tidy) : [];
+            for (let i = 0; i < guests.length; i++) {
+                if (!fullName(guests[i])) {
+                    errorEl.textContent = 'Escribí nombre y apellido del acompañante ' + (i + 1) + '.';
+                    return;
+                }
+            }
+
+            const saved = loadSavedRsvp();
+            const data = { id: saved && saved.id ? saved.id : newRsvpId(), status: rsvpStatus, name: name, guests: guests };
+
+            const submitBtn = document.getElementById('rsvpSubmit');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Enviando…';
+            errorEl.textContent = '';
+            try {
+                const res = await fetch(RSVP_API_URL, { method: 'POST', body: JSON.stringify(data) });
+                const out = await res.json();
+                if (!out.ok) throw new Error(out.error);
+            } catch (err) {
+                errorEl.textContent = 'No se pudo enviar. Revisá tu conexión e intentá de nuevo.';
+                submitBtn.disabled = false;
+                setRsvpStatus(rsvpStatus);
+                return;
+            }
+
+            saveRsvpLocal(data);
+            renderRsvpStatus();
+            if (data.status === 'asiste') {
+                closeRsvpForm();
+                openConfirmationModal(e);
+            } else {
+                document.getElementById('rsvpForm').hidden = true;
+                document.getElementById('rsvpDeclineDone').hidden = false;
+            }
+        }
+
+        // Clear the error message as soon as the person types again
+        document.getElementById('rsvpForm').addEventListener('input', () => {
+            document.getElementById('rsvpError').textContent = '';
+        });
+
+        renderRsvpStatus();
 
         /* ===== CONFIRMATION MODAL & CONFETTI CANNON ===== */
         function openConfirmationModal(e) {

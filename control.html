@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Confirmaciones · PREAS AWARDS 2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #c9a84c;
+            --gold-light: #ecd68b;
+            --gold-shine: #fff2c4;
+            --card-red: #881622;
+            --text-light: #f5f2eb;
+            --text-muted: #c8c2b5;
+            --bg: #0d0d10;
+            --panel: #18181c;
+            --line: rgba(201,168,76,0.25);
+            --dup: #f2c94c;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            min-height: 100vh;
+            background: radial-gradient(ellipse at 50% 0%, #1d1013 0%, var(--bg) 60%);
+            color: var(--text-light);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            padding: 24px 16px 48px;
+        }
+
+        [hidden] { display: none !important; }
+
+        .wrap { max-width: 760px; margin: 0 auto; }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-weight: 800;
+            font-size: 22px;
+            letter-spacing: 3px;
+            color: var(--gold-shine);
+            text-align: center;
+        }
+
+        .subtitle {
+            text-align: center;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin: 6px 0 22px;
+        }
+
+        /* Login */
+        .login {
+            max-width: 340px;
+            margin: 40px auto 0;
+            padding: 26px 22px;
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        .login p { color: var(--text-muted); margin-bottom: 14px; }
+
+        input[type="password"], input[type="search"] {
+            width: 100%;
+            padding: 11px 12px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(201,168,76,0.3);
+            border-radius: 2px;
+            color: var(--text-light);
+            font-family: inherit;
+            font-size: 16px;
+            outline: none;
+        }
+
+        input:focus { border-color: var(--gold-shine); }
+
+        .btn {
+            padding: 10px 18px;
+            background: transparent;
+            border: 1px solid rgba(201,168,76,0.45);
+            border-radius: 2px;
+            color: var(--gold);
+            font-family: inherit;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+
+        .btn:hover { border-color: var(--gold-shine); color: var(--gold-shine); }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #a02030 0%, #70101d 100%);
+            border-color: var(--gold);
+            color: #fff;
+        }
+
+        .login .btn { width: 100%; margin-top: 12px; padding: 12px; }
+
+        .msg { min-height: 18px; margin-top: 10px; color: #ff9b9b; font-size: 12.5px; }
+
+        /* Totals */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .stat {
+            padding: 12px 6px;
+            background: rgba(136, 22, 34, 0.25);
+            border: 1px solid var(--line);
+            border-radius: 3px;
+            text-align: center;
+        }
+
+        .stat b {
+            display: block;
+            font-family: 'Cinzel', serif;
+            font-size: 26px;
+            color: var(--gold-shine);
+        }
+
+        .stat span {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        .stat.main { background: linear-gradient(135deg, #a02030 0%, #70101d 100%); border-color: var(--gold); }
+
+        /* Toolbar */
+        .toolbar { display: flex; gap: 8px; margin-bottom: 10px; }
+        .toolbar input { flex: 1; }
+
+        .filters { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+
+        .filter.active { background: rgba(201,168,76,0.15); color: var(--gold-shine); border-color: var(--gold); }
+
+        .dup-note {
+            margin-bottom: 12px;
+            padding: 10px 12px;
+            border: 1px solid var(--dup);
+            border-radius: 3px;
+            background: rgba(242, 201, 76, 0.1);
+            color: var(--dup);
+            font-size: 12.5px;
+        }
+
+        /* List */
+        .item {
+            padding: 14px;
+            margin-bottom: 8px;
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-left: 3px solid var(--gold);
+            border-radius: 3px;
+        }
+
+        .item.no { border-left-color: #6b6b72; opacity: 0.85; }
+
+        .item.dup { border-color: var(--dup); background: rgba(242, 201, 76, 0.08); }
+
+        .item-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+
+        .item-name { font-size: 16px; font-weight: 600; color: var(--gold-shine); }
+
+        .badge {
+            flex-shrink: 0;
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .badge.si { background: rgba(80, 180, 110, 0.18); color: #8fe0a8; }
+        .badge.no { background: rgba(200, 194, 181, 0.12); color: var(--text-muted); }
+
+        .guests { margin: 8px 0 0 2px; list-style: none; color: var(--text-light); }
+        .guests li { padding: 2px 0; }
+        .guests li::before { content: '+ '; color: var(--gold); }
+
+        .dup-tag { margin-top: 8px; color: var(--dup); font-size: 12px; font-weight: 600; }
+
+        .item-foot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+            color: var(--text-muted);
+            font-size: 11px;
+        }
+
+        .btn-del { padding: 6px 10px; font-size: 11px; border-color: rgba(255,120,120,0.45); color: #ff9b9b; }
+        .btn-del:hover { border-color: #ff9b9b; color: #ffc4c4; }
+
+        .empty { text-align: center; color: var(--text-muted); padding: 30px 0; }
+
+        @media (max-width: 520px) {
+            .stats { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <h1>PREAS AWARDS</h1>
+        <div class="subtitle">Control de confirmaciones</div>
+
+        <!-- Login -->
+        <form class="login" id="loginBox" onsubmit="login(event)">
+            <p>Ingresá la contraseña para ver la lista.</p>
+            <input type="password" id="password" placeholder="Contraseña" autocomplete="current-password">
+            <button class="btn btn-primary" type="submit" id="loginBtn">Entrar</button>
+            <div class="msg" id="loginMsg"></div>
+        </form>
+
+        <!-- Panel -->
+        <div id="panel" hidden>
+            <div class="stats">
+                <div class="stat main"><b id="stPeople">0</b><span>Personas que van</span></div>
+                <div class="stat"><b id="stYes">0</b><span>Confirmaron</span></div>
+                <div class="stat"><b id="stGuests">0</b><span>Acompañantes</span></div>
+                <div class="stat"><b id="stNo">0</b><span>No asisten</span></div>
+            </div>
+
+            <div class="toolbar">
+                <input type="search" id="search" placeholder="Buscar por nombre…" oninput="render()">
+                <button class="btn" onclick="loadData()" id="reloadBtn">Actualizar</button>
+            </div>
+
+            <div class="filters">
+                <button class="btn filter active" data-filter="all" onclick="setFilter('all')">Todos</button>
+                <button class="btn filter" data-filter="asiste" onclick="setFilter('asiste')">Asisten</button>
+                <button class="btn filter" data-filter="no" onclick="setFilter('no')">No asisten</button>
+                <button class="btn filter" data-filter="dup" onclick="setFilter('dup')">Posibles duplicados</button>
+                <button class="btn" onclick="downloadExcel()">Descargar Excel</button>
+            </div>
+
+            <div class="dup-note" id="dupNote" hidden></div>
+            <div id="list"></div>
+            <div class="msg" id="panelMsg"></div>
+        </div>
+    </div>
+
+    <script>
+        const RSVP_API_URL = 'https://script.google.com/macros/s/AKfycbyn4fwEnNlXspB69UArYgNSZROzTWS1843zXXsZB1-lIBfaOzblR-y8-YPnA6nMBgh5/exec';
+        let password = '';
+        let items = [];
+        let dupIds = new Map();
+        let filter = 'all';
+
+        try { password = sessionStorage.getItem('preasPass') || ''; } catch (e) {}
+        if (password) loadData();
+
+        function login(e) {
+            e.preventDefault();
+            password = document.getElementById('password').value.trim();
+            loadData();
+        }
+
+        async function loadData() {
+            const loginBtn = document.getElementById('loginBtn');
+            const reloadBtn = document.getElementById('reloadBtn');
+            loginBtn.disabled = reloadBtn.disabled = true;
+            reloadBtn.textContent = 'Cargando…';
+            document.getElementById('loginMsg').textContent = '';
+            document.getElementById('panelMsg').textContent = '';
+            try {
+                const res = await fetch(RSVP_API_URL + '?password=' + encodeURIComponent(password));
+                const out = await res.json();
+                if (!out.ok) {
+                    try { sessionStorage.removeItem('preasPass'); } catch (e) {}
+                    showLogin(out.error === 'auth' ? 'Contraseña incorrecta.' : 'No se pudo cargar la lista.');
+                    return;
+                }
+                try { sessionStorage.setItem('preasPass', password); } catch (e) {}
+                items = out.items;
+                document.getElementById('loginBox').hidden = true;
+                document.getElementById('panel').hidden = false;
+                render();
+            } catch (err) {
+                const panelOpen = !document.getElementById('panel').hidden;
+                if (panelOpen) document.getElementById('panelMsg').textContent = 'No se pudo cargar la lista. Revisá la conexión.';
+                else showLogin('No se pudo conectar. Revisá la conexión.');
+            } finally {
+                loginBtn.disabled = reloadBtn.disabled = false;
+                reloadBtn.textContent = 'Actualizar';
+            }
+        }
+
+        function showLogin(msg) {
+            document.getElementById('panel').hidden = true;
+            document.getElementById('loginBox').hidden = false;
+            document.getElementById('loginMsg').textContent = msg;
+        }
+
+        // Same name, ignoring accents, case and extra spaces
+        function normName(s) {
+            return String(s).normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/\s+/g, ' ').trim();
+        }
+
+        // Rows that share a name (as titular or companion) with another row
+        function findDuplicates() {
+            const owners = new Map();
+            items.forEach(it => {
+                [it.name].concat(it.guests).forEach(n => {
+                    const key = normName(n);
+                    if (!key) return;
+                    if (!owners.has(key)) owners.set(key, { label: n, ids: new Set() });
+                    owners.get(key).ids.add(it.id);
+                });
+            });
+            dupIds = new Map();
+            owners.forEach(o => {
+                if (o.ids.size < 2) return;
+                o.ids.forEach(id => {
+                    if (!dupIds.has(id)) dupIds.set(id, []);
+                    dupIds.get(id).push(o.label);
+                });
+            });
+        }
+
+        function fmtDate(v) {
+            const d = new Date(v);
+            if (isNaN(d)) return '';
+            return d.toLocaleString('es-AR', { timeZone: 'America/Argentina/Buenos_Aires', day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false });
+        }
+
+        function setFilter(f) {
+            filter = f;
+            document.querySelectorAll('.filter').forEach(b => b.classList.toggle('active', b.dataset.filter === f));
+            render();
+        }
+
+        function render() {
+            findDuplicates();
+            const yes = items.filter(it => it.status === 'asiste');
+            const guests = yes.reduce((n, it) => n + it.guests.length, 0);
+            document.getElementById('stPeople').textContent = yes.length + guests;
+            document.getElementById('stYes').textContent = yes.length;
+            document.getElementById('stGuests').textContent = guests;
+            document.getElementById('stNo').textContent = items.length - yes.length;
+
+            const dupNote = document.getElementById('dupNote');
+            dupNote.hidden = dupIds.size === 0;
+            dupNote.textContent = '⚠ Hay ' + dupIds.size + ' confirmaciones con nombres repetidos. Están marcadas en amarillo.';
+
+            const q = normName(document.getElementById('search').value);
+            const list = items
+                .filter(it => filter === 'all' || (filter === 'dup' ? dupIds.has(it.id) : it.status === filter))
+                .filter(it => !q || [it.name].concat(it.guests).some(n => normName(n).includes(q)))
+                .sort((a, b) => new Date(b.updated) - new Date(a.updated));
+
+            const box = document.getElementById('list');
+            box.innerHTML = '';
+            if (!list.length) {
+                box.innerHTML = '<div class="empty">' + (items.length ? 'No hay resultados.' : 'Todavía no hay confirmaciones.') + '</div>';
+                return;
+            }
+            list.forEach(it => {
+                const el = document.createElement('div');
+                el.className = 'item' + (it.status === 'no' ? ' no' : '') + (dupIds.has(it.id) ? ' dup' : '');
+
+                const head = document.createElement('div');
+                head.className = 'item-head';
+                const name = document.createElement('div');
+                name.className = 'item-name';
+                name.textContent = it.name;
+                const badge = document.createElement('span');
+                badge.className = 'badge ' + (it.status === 'asiste' ? 'si' : 'no');
+                badge.textContent = it.status === 'asiste'
+                    ? 'Asiste' + (it.guests.length ? ' · ' + (1 + it.guests.length) + ' personas' : '')
+                    : 'No asiste';
+                head.append(name, badge);
+                el.appendChild(head);
+
+                if (it.guests.length) {
+                    const ul = document.createElement('ul');
+                    ul.className = 'guests';
+                    it.guests.forEach(g => {
+                        const li = document.createElement('li');
+                        li.textContent = g;
+                        ul.appendChild(li);
+                    });
+                    el.appendChild(ul);
+                }
+
+                if (dupIds.has(it.id)) {
+                    const tag = document.createElement('div');
+                    tag.className = 'dup-tag';
+                    tag.textContent = '⚠ Nombre repetido en otra confirmación: ' + dupIds.get(it.id).join(', ');
+                    el.appendChild(tag);
+                }
+
+                const foot = document.createElement('div');
+                foot.className = 'item-foot';
+                const when = document.createElement('span');
+                const created = fmtDate(it.created), updated = fmtDate(it.updated);
+                when.textContent = 'Confirmó: ' + created + (updated && updated !== created ? ' · Editado: ' + updated : '');
+                const del = document.createElement('button');
+                del.className = 'btn btn-del';
+                del.textContent = 'Eliminar';
+                del.onclick = () => deleteItem(it);
+                foot.append(when, del);
+                el.appendChild(foot);
+
+                box.appendChild(el);
+            });
+        }
+
+        async function deleteItem(it) {
+            if (!confirm('¿Eliminar la confirmación de ' + it.name + '? No se puede deshacer.')) return;
+            document.getElementById('panelMsg').textContent = '';
+            try {
+                const res = await fetch(RSVP_API_URL, {
+                    method: 'POST',
+                    body: JSON.stringify({ action: 'delete', id: it.id, password: password })
+                });
+                const out = await res.json();
+                if (!out.ok) throw new Error(out.error);
+                items = items.filter(x => x.id !== it.id);
+                render();
+            } catch (err) {
+                document.getElementById('panelMsg').textContent = 'No se pudo eliminar. Intentá de nuevo.';
+            }
+        }
+
+        // One row per person, ready for Excel (Spanish locale uses ";")
+        function downloadExcel() {
+            const cell = v => {
+                let s = String(v == null ? '' : v);
+                if (/^[=+\-@]/.test(s)) s = "'" + s;
+                return '"' + s.replace(/"/g, '""') + '"';
+            };
+            const rows = [['Estado', 'Nombre y apellido', 'Rol', 'Confirmó el', 'Última modificación']];
+            items.forEach(it => {
+                const status = it.status === 'asiste' ? 'Asiste' : 'No asiste';
+                rows.push([status, it.name, 'Titular', fmtDate(it.created), fmtDate(it.updated)]);
+                it.guests.forEach(g => rows.push([status, g, 'Acompañante de ' + it.name, fmtDate(it.created), fmtDate(it.updated)]));
+            });
+            const csv = '﻿' + rows.map(r => r.map(cell).join(';')).join('\r\n');
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
+            a.download = 'confirmaciones-preas-awards-2026.csv';
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+        }
+    </script>
+</body>
+</html>
