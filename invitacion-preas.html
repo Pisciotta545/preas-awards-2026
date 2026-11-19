@@ -683,6 +683,65 @@
             box-shadow: 0 0 15px rgba(201,168,76,0.15);
         }
 
+        /* Countdown to the ceremony */
+        .countdown {
+            margin-top: 18px;
+        }
+
+        .countdown-label {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 3.5px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 10px;
+        }
+
+        .countdown-boxes {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .countdown-box {
+            min-width: 58px;
+            padding: 8px 4px 6px;
+            background: rgba(136, 22, 34, 0.28);
+            border: 1px solid rgba(201,168,76,0.35);
+            border-radius: 3px;
+            box-shadow: 0 0 15px rgba(201,168,76,0.12);
+        }
+
+        .countdown-num {
+            display: block;
+            font-family: 'Cinzel', serif;
+            font-size: 22px;
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--gold-shine);
+            text-shadow: 0 0 10px rgba(201,168,76,0.4);
+        }
+
+        .countdown-unit {
+            display: block;
+            margin-top: 3px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 8px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        .countdown-done {
+            font-family: 'Cinzel', serif;
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--gold-shine);
+        }
+
         /* Dividers */
         .gold-line {
             width: 70%;
@@ -1402,8 +1461,8 @@
                 <div class="trophy-badge-wrapper">
                     <div class="badge-halo-spin"></div>
                     <div class="seal-mini-badge">
-                        <video autoplay muted loop playsinline style="width:100%;height:100%;border-radius:50%;object-fit:cover;">
-                            <source src="Logo.MP4" type="video/mp4">
+                        <video id="logoVideo" autoplay muted loop playsinline preload="auto" poster="logo-poster.jpg" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">
+                            <source src="logo-loop.mp4" type="video/mp4">
                         </video>
                     </div>
                 </div>
@@ -1414,6 +1473,17 @@
                 
                 <div class="hero-edition">
                     <span>EDICIÓN 2026</span>
+                </div>
+
+                <!-- Countdown to the ceremony -->
+                <div class="countdown" id="countdown">
+                    <div class="countdown-label">La ceremonia comienza en</div>
+                    <div class="countdown-boxes">
+                        <div class="countdown-box"><span class="countdown-num" id="cdDays">--</span><span class="countdown-unit">Días</span></div>
+                        <div class="countdown-box"><span class="countdown-num" id="cdHours">--</span><span class="countdown-unit">Horas</span></div>
+                        <div class="countdown-box"><span class="countdown-num" id="cdMins">--</span><span class="countdown-unit">Min</span></div>
+                        <div class="countdown-box"><span class="countdown-num" id="cdSecs">--</span><span class="countdown-unit">Seg</span></div>
+                    </div>
                 </div>
             </div>
 
@@ -1447,7 +1517,7 @@
 
                     <div class="detail-item">
                         <span class="d-icon">📍</span>
-                        <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=Av.+Per%C3%B3n+4258%2C+Jos%C3%A9+C.+Paz%2C+Buenos+Aires" target="_blank" rel="noopener"><strong>Av. Perón 4258</strong> — José C. Paz <span class="sub-note">(ver mapa)</span></a>
+                        <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=Iglesia+Cristiandad+Jos%C3%A9+C.+Paz%2C+Av.+Per%C3%B3n+4258%2C+Jos%C3%A9+C.+Paz" target="_blank" rel="noopener"><strong>Av. Perón 4258</strong> — José C. Paz <span class="sub-note">(ver mapa)</span></a>
                     </div>
                 </div>
 
@@ -1549,6 +1619,10 @@
             }
             document.getElementById('musicToggle').classList.add('visible');
 
+            // Start the logo video loop (needs a user gesture on some phones)
+            const logoVideo = document.getElementById('logoVideo');
+            if (logoVideo) logoVideo.play().catch(() => {});
+
             const envelope = document.getElementById('envelopeRoot');
             const sceneEnvelope = document.getElementById('sceneEnvelope');
             const sceneCardView = document.getElementById('sceneCardView');
@@ -1590,6 +1664,9 @@
                     document.body.classList.add('scroll-unlocked');
                     window.scrollTo({ top: 0, behavior: 'smooth' });
 
+                    const logoVideo = document.getElementById('logoVideo');
+                    if (logoVideo && logoVideo.paused) logoVideo.play().catch(() => {});
+
                     // 5. Lanzar confeti de gala
                     launchConfettiRain(50);
                     startGoldParticles();
@@ -1597,6 +1674,37 @@
 
             }, 1650);
         }
+
+        /* ===== LOGO VIDEO: KEEP LOOPING ===== */
+        // Some browsers stop at the loop point instead of restarting
+        const logoVideoEl = document.getElementById('logoVideo');
+        if (logoVideoEl) {
+            logoVideoEl.addEventListener('pause', () => {
+                if (!document.hidden) logoVideoEl.play().catch(() => {});
+            });
+        }
+
+        /* ===== COUNTDOWN TO THE CEREMONY ===== */
+        // Sábado 26 de Diciembre de 2026, 17:00 hs (Argentina, UTC-3)
+        const ceremonyTime = new Date('2026-12-26T17:00:00-03:00').getTime();
+
+        function updateCountdown() {
+            const diff = ceremonyTime - Date.now();
+            const box = document.getElementById('countdown');
+            if (diff <= 0) {
+                box.innerHTML = '<div class="countdown-done">¡Llegó la noche de gala!</div>';
+                clearInterval(countdownTimer);
+                return;
+            }
+            const pad = n => String(n).padStart(2, '0');
+            document.getElementById('cdDays').textContent = Math.floor(diff / 86400000);
+            document.getElementById('cdHours').textContent = pad(Math.floor(diff / 3600000) % 24);
+            document.getElementById('cdMins').textContent = pad(Math.floor(diff / 60000) % 60);
+            document.getElementById('cdSecs').textContent = pad(Math.floor(diff / 1000) % 60);
+        }
+
+        const countdownTimer = setInterval(updateCountdown, 1000);
+        updateCountdown();
 
         /* ===== MUSIC ON / OFF ===== */
         function toggleMusic() {
