@@ -120,7 +120,7 @@
             justify-content: center;
             align-items: center;
             perspective: 1200px;
-            transform-style: preserve-3d;
+            transform-style: flat;
             will-change: transform;
         }
 
@@ -157,7 +157,7 @@
             height: 100%;
             cursor: pointer;
             perspective: 1400px;
-            transform-style: preserve-3d;
+            transform-style: flat;
             transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.3, 1);
             z-index: 2;
             animation: mat-float 5s ease-in-out infinite;
@@ -1075,6 +1075,11 @@
                 <!-- Envelope Backplate -->
                 <div class="env-backplate">
                     <div class="env-inner-lining"></div>
+                    <!-- Top corner fills (cover the gap under the flap shoulders) -->
+                    <svg viewBox="0 0 320 200" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%;">
+                        <polygon points="0,0 22,0 0,16" fill="#6f1523" />
+                        <polygon points="320,0 298,0 320,16" fill="#731625" />
+                    </svg>
                 </div>
 
                 <!-- Peeking Card inside -->
