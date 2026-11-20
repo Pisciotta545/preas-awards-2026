@@ -2081,6 +2081,25 @@
             box.hidden = false;
         }
 
+        // Shows the current answer if the organizers changed it from the panel
+        async function refreshSavedRsvp() {
+            const saved = loadSavedRsvp();
+            if (!saved || !saved.id) return;
+            try {
+                const res = await fetch(RSVP_API_URL + '?id=' + encodeURIComponent(saved.id));
+                const out = await res.json();
+                if (!out.ok) return;
+                // Skip if the guest sent a new answer meanwhile
+                if (JSON.stringify(loadSavedRsvp()) !== JSON.stringify(saved)) return;
+                if (out.item) {
+                    saveRsvpLocal({ id: saved.id, status: out.item.status, name: out.item.name, guests: out.item.guests });
+                } else {
+                    try { localStorage.removeItem(RSVP_STORAGE_KEY); } catch (e) {}
+                }
+                renderRsvpStatus();
+            } catch (e) {}
+        }
+
         function openRsvpForm(status) {
             const saved = loadSavedRsvp();
             rsvpGuests = saved && saved.status === 'asiste' ? saved.guests.slice() : [];
@@ -2195,6 +2214,7 @@
         });
 
         renderRsvpStatus();
+        refreshSavedRsvp();
 
         /* ===== CONFIRMATION MODAL & CONFETTI CANNON ===== */
         function openConfirmationModal(e) {
