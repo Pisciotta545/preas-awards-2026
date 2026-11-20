@@ -2003,19 +2003,9 @@
 
             const isApple = /iPhone|iPad|iPod|Macintosh/.test(navigator.userAgent);
             if (isApple) {
-                const ics = [
-                    'BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//PREAS AWARDS//ES',
-                    'BEGIN:VEVENT',
-                    'UID:preas-awards-2026@pisciotta545.github.io',
-                    'DTSTAMP:' + start,
-                    'DTSTART:' + start, 'DTEND:' + end,
-                    'SUMMARY:' + title,
-                    'LOCATION:' + location.replace(/,/g, '\\,'),
-                    'DESCRIPTION:' + details,
-                    'BEGIN:VALARM', 'TRIGGER:-P1D', 'ACTION:DISPLAY', 'DESCRIPTION:' + title, 'END:VALARM',
-                    'END:VEVENT', 'END:VCALENDAR'
-                ].join('\r\n');
-                window.location.href = 'data:text/calendar;charset=utf-8,' + encodeURIComponent(ics);
+                // Safari en iPhone no abre calendarios generados en la página (data:),
+                // pero sí un archivo .ics real servido por el sitio
+                window.location.href = 'preas-awards-2026.ics';
             } else {
                 const url = 'https://calendar.google.com/calendar/render?action=TEMPLATE'
                     + '&text=' + encodeURIComponent(title)
