@@ -192,8 +192,19 @@
         .badge.no { background: rgba(200, 194, 181, 0.12); color: var(--text-muted); }
 
         .guests { margin: 8px 0 0 2px; list-style: none; color: var(--text-light); }
-        .guests li { padding: 2px 0; }
+        .guests li { padding: 2px 0; display: flex; align-items: center; gap: 6px; }
         .guests li::before { content: '+ '; color: var(--gold); }
+
+        .btn-x {
+            margin-left: auto;
+            flex-shrink: 0;
+            padding: 5px 10px;
+            font-size: 11px;
+            letter-spacing: 1px;
+            border-color: rgba(255,120,120,0.35);
+            color: #ff9b9b;
+        }
+        .btn-x:hover { border-color: #ff9b9b; color: #ffc4c4; }
 
         .dup-tag { margin-top: 8px; color: var(--dup); font-size: 12px; font-weight: 600; }
 
@@ -201,11 +212,16 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
             gap: 10px;
             margin-top: 10px;
             color: var(--text-muted);
             font-size: 11px;
         }
+
+        .item-actions { display: flex; gap: 6px; margin-left: auto; }
+        .btn-status { padding: 6px 10px; font-size: 11px; }
+        .item.busy { opacity: 0.6; pointer-events: none; }
 
         .btn-del { padding: 6px 10px; font-size: 11px; border-color: rgba(255,120,120,0.45); color: #ff9b9b; }
         .btn-del:hover { border-color: #ff9b9b; color: #ffc4c4; }
@@ -393,9 +409,16 @@
                 if (it.guests.length) {
                     const ul = document.createElement('ul');
                     ul.className = 'guests';
-                    it.guests.forEach(g => {
+                    it.guests.forEach((g, i) => {
                         const li = document.createElement('li');
-                        li.textContent = g;
+                        const gName = document.createElement('span');
+                        gName.textContent = g;
+                        const rm = document.createElement('button');
+                        rm.className = 'btn btn-x';
+                        rm.textContent = 'Quitar';
+                        rm.setAttribute('aria-label', 'Quitar a ' + g);
+                        rm.onclick = () => removeGuest(it, i, el);
+                        li.append(gName, rm);
                         ul.appendChild(li);
                     });
                     el.appendChild(ul);
@@ -417,7 +440,14 @@
                 del.className = 'btn btn-del';
                 del.textContent = 'Eliminar';
                 del.onclick = () => deleteItem(it);
-                foot.append(when, del);
+                const toggle = document.createElement('button');
+                toggle.className = 'btn btn-status';
+                toggle.textContent = it.status === 'asiste' ? 'Pasar a No asiste' : 'Pasar a Asiste';
+                toggle.onclick = () => toggleStatus(it, el);
+                const actions = document.createElement('div');
+                actions.className = 'item-actions';
+                actions.append(toggle, del);
+                foot.append(when, actions);
                 el.appendChild(foot);
 
                 box.appendChild(el);
@@ -439,6 +469,45 @@
             } catch (err) {
                 document.getElementById('panelMsg').textContent = 'No se pudo eliminar. Intentá de nuevo.';
             }
+        }
+
+        // Saves the edited confirmation (same id, so the sheet row is updated)
+        async function saveItem(it, status, guests, el, errText) {
+            document.getElementById('panelMsg').textContent = '';
+            el.classList.add('busy');
+            try {
+                const res = await fetch(RSVP_API_URL, {
+                    method: 'POST',
+                    body: JSON.stringify({ id: it.id, status: status, name: it.name, guests: guests })
+                });
+                const out = await res.json();
+                if (!out.ok) throw new Error(out.error);
+                it.status = status;
+                it.guests = guests;
+                it.updated = new Date().toISOString();
+                render();
+            } catch (err) {
+                el.classList.remove('busy');
+                document.getElementById('panelMsg').textContent = errText;
+            }
+        }
+
+        function removeGuest(it, index, el) {
+            const g = it.guests[index];
+            if (!confirm('¿Quitar a ' + g + ' de los acompañantes de ' + it.name + '?')) return;
+            saveItem(it, it.status, it.guests.filter((_, i) => i !== index), el, 'No se pudo quitar el acompañante. Intentá de nuevo.');
+        }
+
+        function toggleStatus(it, el) {
+            const toNo = it.status === 'asiste';
+            let q = toNo
+                ? '¿Marcar que ' + it.name + ' NO asiste?'
+                : '¿Marcar que ' + it.name + ' asiste?';
+            if (toNo && it.guests.length) {
+                q += '\nTambién se quitarán sus ' + it.guests.length + (it.guests.length === 1 ? ' acompañante.' : ' acompañantes.');
+            }
+            if (!confirm(q)) return;
+            saveItem(it, toNo ? 'no' : 'asiste', [], el, 'No se pudo cambiar la asistencia. Intentá de nuevo.');
         }
 
         // One row per person, ready for Excel (Spanish locale uses ";")
